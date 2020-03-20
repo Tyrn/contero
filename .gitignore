@@ -1,0 +1,6 @@
+/bin/
+/.buildozer/
+.idea
+*.geany
+*.vim
+
