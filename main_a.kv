@@ -1,0 +1,18 @@
+BoxLayout:
+    orientation: "vertical"
+
+    MDToolbar:
+        title: "Example Tabs"
+
+    MDTabs:
+        id: android_tabs
+        on_tab_switch: app.on_tab_switch(*args)
+
+
+<Tab>:
+
+    MDLabel:
+        id: label
+        text: "Tab 0"
+        halign: "center"
+
