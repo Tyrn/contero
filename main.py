@@ -10,7 +10,7 @@ class Tab(FloatLayout, MDTabsBase):
     '''Class implementing content for a tab.'''
 
 
-IS_ICO = True
+IS_ICO = False
 TAB_N = 3
 
 
