@@ -7,38 +7,48 @@ from kivymd.icon_definitions import md_icons
 
 
 class TabMain(FloatLayout, MDTabsBase):
-    '''Class implementing content for a tab.'''
+    """The discovery tab."""
+
+    def surfacing(self, tab_text):
+        self.ids.icon.icon = "eye"
 
 
 class TabList(FloatLayout, MDTabsBase):
-    '''Class implementing content for a tab.'''
+    """The engaged power supplies tab."""
+
+    def surfacing(self, tab_text):
+        self.ids.icon.icon = "flash"
 
 
 class TabDetails(FloatLayout, MDTabsBase):
-    '''Class implementing content for a tab.'''
+    """The engaged power supply details tab."""
+
+    def surfacing(self, tab_text):
+        self.ids.icon.icon = "details"
 
 
-class Example(MDApp):
+class Contero(MDApp):
     def build(self):
-        return Builder.load_file("main_a.kv")
+        return Builder.load_file("main.kv")
 
     def on_start(self):
-        self.root.ids.android_tabs.add_widget(TabMain(text="*TabMain*"))
-        self.root.ids.android_tabs.add_widget(TabList(text="*TabList*"))
-        self.root.ids.android_tabs.add_widget(TabDetails(text="*TabDetails*"))
+        text = "eye"
+        main = TabMain(text=text)
+        main.surfacing(text)
+        self.root.ids.android_tabs.add_widget(main)
+        self.root.ids.android_tabs.add_widget(TabList(text="flash"))
+        self.root.ids.android_tabs.add_widget(TabDetails(text="details"))
 
-    def on_tab_switch(
-        self, instance_tabs, instance_tab, instance_tab_label, tab_text
-    ):
-        '''Called when switching tabs.
+    def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
+        """Called when switching tabs.
 
         :type instance_tabs: <kivymd.uix.tab.MDTabs object>;
         :param instance_tab: <__main__.Tab object>;
         :param instance_tab_label: <kivymd.uix.tab.MDTabsLabel object>;
         :param tab_text: text or name icon of tab;
-        '''
+        """
 
-        instance_tab.ids.label.text = tab_text
+        instance_tab.surfacing(tab_text)
 
 
-Example().run()
+Contero().run()
