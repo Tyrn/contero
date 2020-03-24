@@ -9,18 +9,15 @@ BoxLayout:
         on_tab_switch: app.on_tab_switch(*args)
 
 
-<TabMain>:
+<TabList>:
     ScrollView:
-        id: scroll_view
+        bar_width: 10
+        bar_color: .77, .77, .77, 1
+        bar_inactive_color: .33, .33, .33, 1
+        effect_cls: "ScrollEffect"
+        scroll_type: ['bars']
         MDList:
             id: container
-
-
-<TabList>:
-    MDIconButton:
-        id: icon
-        user_font_size: "48sp"
-        pos_hint: {"center_x": .5, "center_y": .5}
 
 
 <TabDetails>:

@@ -1,5 +1,6 @@
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
+from kivy.clock import Clock
 
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
@@ -7,17 +8,17 @@ from kivymd.uix.list import OneLineListItem
 from kivymd.icon_definitions import md_icons
 
 
-class TabMain(FloatLayout, MDTabsBase):
-    """The discovery tab."""
-
-    def surfacing(self, tab_text):
-        pass
-
 class TabList(FloatLayout, MDTabsBase):
     """The engaged power supplies tab."""
 
     def surfacing(self, tab_text):
-        self.ids.icon.icon = "flash"
+        pass
+
+    def discover(self):
+        for i in range(30):
+            self.ids.container.add_widget(
+                OneLineListItem(text=f"Power supply {i + 1:>4}")
+            )
 
 
 class TabDetails(FloatLayout, MDTabsBase):
@@ -32,16 +33,12 @@ class Contero(MDApp):
         return Builder.load_file("main.kv")
 
     def on_start(self):
-        text = "eye"
-        main = TabMain(text=text)
+        text = "flash"
+        main = TabList(text=text)
         main.surfacing(text)
         self.root.ids.android_tabs.add_widget(main)
-        for i in range(20):
-            main.ids.container.add_widget(
-                OneLineListItem(text=f"Single-line item {i}")
-            )
-        self.root.ids.android_tabs.add_widget(TabList(text="flash"))
-        self.root.ids.android_tabs.add_widget(TabDetails(text="details"))
+        Clock.schedule_once(lambda dt: main.discover(), 2)
+        self.root.ids.android_tabs.add_widget(TabDetails(text="equalizer"))
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         """Called when switching tabs.
