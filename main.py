@@ -3,6 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
+from kivymd.uix.list import OneLineListItem
 from kivymd.icon_definitions import md_icons
 
 
@@ -10,8 +11,7 @@ class TabMain(FloatLayout, MDTabsBase):
     """The discovery tab."""
 
     def surfacing(self, tab_text):
-        self.ids.icon.icon = "eye"
-
+        pass
 
 class TabList(FloatLayout, MDTabsBase):
     """The engaged power supplies tab."""
@@ -36,6 +36,10 @@ class Contero(MDApp):
         main = TabMain(text=text)
         main.surfacing(text)
         self.root.ids.android_tabs.add_widget(main)
+        for i in range(20):
+            main.ids.container.add_widget(
+                OneLineListItem(text=f"Single-line item {i}")
+            )
         self.root.ids.android_tabs.add_widget(TabList(text="flash"))
         self.root.ids.android_tabs.add_widget(TabDetails(text="details"))
 

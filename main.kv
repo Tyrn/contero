@@ -10,10 +10,10 @@ BoxLayout:
 
 
 <TabMain>:
-    MDIconButton:
-        id: icon
-        user_font_size: "48sp"
-        pos_hint: {"center_x": .5, "center_y": .5}
+    ScrollView:
+        id: scroll_view
+        MDList:
+            id: container
 
 
 <TabList>:
