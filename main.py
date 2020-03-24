@@ -25,7 +25,7 @@ class TabDetails(FloatLayout, MDTabsBase):
     """The engaged power supply details tab."""
 
     def surfacing(self, tab_text):
-        self.ids.icon.icon = "details"
+        self.ids.icon.icon = "equalizer"
 
 
 class Contero(MDApp):

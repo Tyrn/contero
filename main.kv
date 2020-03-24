@@ -11,11 +11,14 @@ BoxLayout:
 
 <TabList>:
     ScrollView:
-        bar_width: 10
-        bar_color: .77, .77, .77, 1
-        bar_inactive_color: .33, .33, .33, 1
+        bar_margin: 5
+        bar_width: 15
+        bar_color: .0, .8, .0, 1
+        bar_inactive_color: .5, .5, .5, 1
         effect_cls: "ScrollEffect"
-        scroll_type: ['bars']
+        scroll_type: ["bars", "content"]
+        scroll_distance: 5
+        scroll_timeout: 250
         MDList:
             id: container
 
