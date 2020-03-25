@@ -8,6 +8,28 @@ from kivymd.uix.list import OneLineListItem
 from kivymd.icon_definitions import md_icons
 
 
+class PowerListItem(OneLineListItem):
+    def on_touch_down(self, touch):
+        if self.collide_point(*touch.pos):
+            #self.pressed = touch.pos
+            # we consumed the touch. return False here to propagate
+            # the touch further to the children.
+            print(f"touched down at {touch.pos}")
+            return True
+        return super(PowerListItem, self).on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        if self.collide_point(*touch.pos):
+            # we consumed the touch. return False here to propagate
+            # the touch further to the children.
+            print(f"touched up at {touch.pos}")
+            return True
+        return super(PowerListItem, self).on_touch_up(touch)
+
+    #def on_pressed(self, instance, pos):
+    #    print("pressed at {pos}".format(pos=pos))
+
+
 class TabList(FloatLayout, MDTabsBase):
     """The engaged power supplies tab."""
 
@@ -17,7 +39,7 @@ class TabList(FloatLayout, MDTabsBase):
     def discover(self):
         for i in range(30):
             self.ids.container.add_widget(
-                OneLineListItem(text=f"Power supply {i + 1:>4}")
+                PowerListItem(text=f"Power supply {i + 1:>4}")
             )
 
 
