@@ -1,30 +1,34 @@
+from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
 from kivy.clock import Clock
-
-from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import OneLineListItem
+from kivymd.uix.list import TwoLineAvatarIconListItem
+from kivymd.uix.list import ImageLeftWidget
 from kivymd.icon_definitions import md_icons
 
 
 class PowerListItem(OneLineListItem):
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            #self.pressed = touch.pos
-            # we consumed the touch. return False here to propagate
-            # the touch further to the children.
-            print(f"touched down at {touch.pos}")
-            return True
-        return super(PowerListItem, self).on_touch_down(touch)
+    """The engaged power supply item."""
+    def on_release(self):
+        print("on release")
+    #def on_touch_down(self, touch):
+    #    if self.collide_point(*touch.pos):
+    #        #self.pressed = touch.pos
+    #        # we consumed the touch. return False here to propagate
+    #        # the touch further to the children.
+    #        print(f"touched down at {touch.pos}")
+    #        return True
+    #    return super(PowerListItem, self).on_touch_down(touch)
 
-    def on_touch_up(self, touch):
-        if self.collide_point(*touch.pos):
-            # we consumed the touch. return False here to propagate
-            # the touch further to the children.
-            print(f"touched up at {touch.pos}")
-            return True
-        return super(PowerListItem, self).on_touch_up(touch)
+    #def on_touch_up(self, touch):
+    #    if self.collide_point(*touch.pos):
+    #        # we consumed the touch. return False here to propagate
+    #        # the touch further to the children.
+    #        print(f"touched up at {touch.pos}")
+    #        return True
+    #    return super(PowerListItem, self).on_touch_up(touch)
 
     #def on_pressed(self, instance, pos):
     #    print("pressed at {pos}".format(pos=pos))
