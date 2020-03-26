@@ -1,51 +1,33 @@
-from kivymd.app import MDApp
+from functools import partial
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
 from kivy.clock import Clock
+from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import OneLineListItem
 from kivymd.uix.list import TwoLineAvatarIconListItem
-from kivymd.uix.list import ImageLeftWidget
 from kivymd.icon_definitions import md_icons
-
 
 class PowerListItem(OneLineListItem):
     """The engaged power supply item."""
-    #def on_release(self):
-    #    print("on release")
+
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
-            #touch.grab(self)
             if touch.is_double_tap:
-                print(f"double tap at {touch.pos}, '{self.text}'")
-                app = MDApp.get_running_app()
-                app.root.ids.android_tabs.tab_bar.parent.carousel.load_slide(None)
-                #app.root.ids.android_tabs.tab_bar.parent.dispatch("on_tab_switch")
+                tabs = MDApp.get_running_app().root.ids.android_tabs
+                # Just like your on_release.
+                tabs.tab_bar.parent.dispatch(
+                    "on_tab_switch",
+                    self.tab_details,
+                    self.tab_details.tab_label,
+                    md_icons[self.tab_details.text],
+                )
+                tabs.tab_bar.parent.carousel.load_slide(self.tab_details)
                 return True
         return super(PowerListItem, self).on_touch_down(touch)
-    #def on_touch_down(self, touch):
-    #    if self.collide_point(*touch.pos):
-    #        #self.pressed = touch.pos
-    #        # we consumed the touch. return False here to propagate
-    #        # the touch further to the children.
-    #        print(f"touched down at {touch.pos}")
-    #        return True
-    #    return super(PowerListItem, self).on_touch_down(touch)
-    ##def on_touch_up(self, touch):
-    ##    if touch.grab_current is self:
-    ##        print("on_touch_up")
-    ##        touch.ungrab(self)
-    ##        return True
-    #def on_touch_up(self, touch):
-    #    if self.collide_point(*touch.pos):
-    #        # we consumed the touch. return False here to propagate
-    #        # the touch further to the children.
-    #        print(f"touched up at {touch.pos}")
-    #        return True
-    #    return super(PowerListItem, self).on_touch_up(touch)
 
-    #def on_pressed(self, instance, pos):
-    #    print("pressed at {pos}".format(pos=pos))
+    def on_release(self):
+        print("on release")
 
 
 class TabList(FloatLayout, MDTabsBase):
@@ -54,11 +36,11 @@ class TabList(FloatLayout, MDTabsBase):
     def surfacing(self, tab_text):
         pass
 
-    def discover(self):
+    def discover(self, tab_details):
         for i in range(30):
-            self.ids.container.add_widget(
-                PowerListItem(text=f"Power supply {i + 1:>4}")
-            )
+            item = PowerListItem(text=f"Power supply {i + 1:>4}")
+            item.tab_details = tab_details
+            self.ids.container.add_widget(item)
 
 
 class TabDetails(FloatLayout, MDTabsBase):
@@ -77,8 +59,10 @@ class Contero(MDApp):
         main = TabList(text=text)
         main.surfacing(text)
         self.root.ids.android_tabs.add_widget(main)
-        Clock.schedule_once(lambda dt: main.discover(), 2)
-        self.root.ids.android_tabs.add_widget(TabDetails(text="equalizer"))
+
+        details = TabDetails(text="equalizer")
+        self.root.ids.android_tabs.add_widget(details)
+        Clock.schedule_once(lambda dt: main.discover(details), 5)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         """Called when switching tabs.
@@ -89,7 +73,7 @@ class Contero(MDApp):
         :param tab_text: text or name icon of tab;
         """
 
-        print(f"instance_tab: {instance_tab}")
+        print(f"\ninstance_tab: {instance_tab}")
         print(f"instance_tab_label: {instance_tab_label}")
         print(f"tab_text: {tab_text}")
         instance_tab.surfacing(tab_text)
