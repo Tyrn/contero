@@ -8,6 +8,7 @@ from kivymd.uix.list import OneLineListItem
 from kivymd.uix.list import TwoLineAvatarIconListItem
 from kivymd.icon_definitions import md_icons
 
+
 class PowerListItem(OneLineListItem):
     """The engaged power supply item."""
 
