@@ -11,8 +11,18 @@ from kivymd.icon_definitions import md_icons
 
 class PowerListItem(OneLineListItem):
     """The engaged power supply item."""
-    def on_release(self):
-        print("on release")
+    #def on_release(self):
+    #    print("on release")
+    def on_touch_down(self, touch):
+        if self.collide_point(*touch.pos):
+            #touch.grab(self)
+            if touch.is_double_tap:
+                print(f"double tap at {touch.pos}, '{self.text}'")
+                app = MDApp.get_running_app()
+                app.root.ids.android_tabs.tab_bar.parent.carousel.load_slide(None)
+                #app.root.ids.android_tabs.tab_bar.parent.dispatch("on_tab_switch")
+                return True
+        return super(PowerListItem, self).on_touch_down(touch)
     #def on_touch_down(self, touch):
     #    if self.collide_point(*touch.pos):
     #        #self.pressed = touch.pos
@@ -21,7 +31,11 @@ class PowerListItem(OneLineListItem):
     #        print(f"touched down at {touch.pos}")
     #        return True
     #    return super(PowerListItem, self).on_touch_down(touch)
-
+    ##def on_touch_up(self, touch):
+    ##    if touch.grab_current is self:
+    ##        print("on_touch_up")
+    ##        touch.ungrab(self)
+    ##        return True
     #def on_touch_up(self, touch):
     #    if self.collide_point(*touch.pos):
     #        # we consumed the touch. return False here to propagate
@@ -75,6 +89,9 @@ class Contero(MDApp):
         :param tab_text: text or name icon of tab;
         """
 
+        print(f"instance_tab: {instance_tab}")
+        print(f"instance_tab_label: {instance_tab_label}")
+        print(f"tab_text: {tab_text}")
         instance_tab.surfacing(tab_text)
 
 
