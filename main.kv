@@ -1,8 +1,12 @@
+#:kivy 1.11.1
+#:import T __main__.T
 BoxLayout:
     orientation: "vertical"
     MDToolbar:
         id: toolbar
-        title: "Power Supplies"
+        title: T["co-toolbar-title"]
+        #icon: "git"
+        type: "top"
         right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: print('dots-vertical')], ]
     MDTabs:
         id: android_tabs
@@ -32,7 +36,7 @@ BoxLayout:
         pos_hint: {"center_x": .9, "center_y": .9}
     MDLabel:
         id: label
-        text: "No power supply selected"
+        text: T["co-no-ps-selected"]
         halign: "center"
     MDSpinner:
         size_hint: None, None

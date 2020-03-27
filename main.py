@@ -1,4 +1,8 @@
 from functools import partial
+import kivy
+
+kivy.require("1.11.1")
+from kivy.storage.jsonstore import JsonStore
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
@@ -9,6 +13,9 @@ from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import OneLineListItem
 from kivymd.uix.list import TwoLineAvatarIconListItem
 from kivymd.icon_definitions import md_icons
+import co_lang
+
+T = None
 
 
 class PowerListItem(OneLineListItem):
@@ -38,7 +45,7 @@ class TabList(FloatLayout, MDTabsBase):
 
     def discover(self, tab_details):
         for i in range(30):
-            item = PowerListItem(text=f"Power supply {i + 1:>4}")
+            item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>4}")
             item.tab_details = tab_details
             self.ids.container.add_widget(item)
 
@@ -53,22 +60,31 @@ class TabDetails(FloatLayout, MDTabsBase):
 class Contero(MDApp):
     menu_lang = ObjectProperty()
 
-    def menu_lang_en(self, text_of):
-        print(text_of)
-
-    def menu_lang_ru(self, text_of):
-        print(text_of)
+    def menu_lang_callback(self, lng):
+        global T
+        T = co_lang.LANG[lng]
+        store = JsonStore("co_T.json")
+        store.put("co-lang", name=lng)
 
     def menu_lang_append(self):
         self.menu_lang = MDDropdownMenu(width_mult=2)
-        self.menu_lang.items.append(
-            {"viewclass": "MDMenuItem", "text": "EN", "callback": self.menu_lang_en,}
-        )
-        self.menu_lang.items.append(
-            {"viewclass": "MDMenuItem", "text": "RU", "callback": self.menu_lang_ru,}
-        )
+        for lng in co_lang.LANG:
+            self.menu_lang.items.append(
+                {
+                    "viewclass": "MDMenuItem",
+                    "text": lng,
+                    "callback": self.menu_lang_callback,
+                }
+            )
 
     def build(self):
+        global T
+        T = co_lang.LANG["RU"]
+        store = JsonStore("co_T.json")
+        if store.exists("co-lang"):
+            lng = store.get("co-lang")["name"]
+            T = co_lang.LANG[lng]
+
         return Builder.load_file("main.kv")
 
     def on_start(self):
