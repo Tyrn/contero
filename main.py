@@ -1,8 +1,10 @@
 from functools import partial
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.clock import Clock
 from kivymd.app import MDApp
+from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import OneLineListItem
 from kivymd.uix.list import TwoLineAvatarIconListItem
@@ -27,9 +29,6 @@ class PowerListItem(OneLineListItem):
                 return True
         return super(PowerListItem, self).on_touch_down(touch)
 
-    def on_release(self):
-        print("on release")
-
 
 class TabList(FloatLayout, MDTabsBase):
     """The engaged power supplies tab."""
@@ -52,10 +51,31 @@ class TabDetails(FloatLayout, MDTabsBase):
 
 
 class Contero(MDApp):
+    menu_lang = ObjectProperty()
+
+    def menu_lang_en(self, text_of):
+        print(text_of)
+
+    def menu_lang_ru(self, text_of):
+        print(text_of)
+
+    def menu_lang_append(self):
+        self.menu_lang = MDDropdownMenu(width_mult=2)
+        self.menu_lang.items.append(
+            {"viewclass": "MDMenuItem", "text": "EN", "callback": self.menu_lang_en,}
+        )
+        self.menu_lang.items.append(
+            {"viewclass": "MDMenuItem", "text": "RU", "callback": self.menu_lang_ru,}
+        )
+
     def build(self):
         return Builder.load_file("main.kv")
 
     def on_start(self):
+        self.theme_cls.primary_palette = "Green"
+        # self.theme_cls.primary_hue = '900'
+
+        self.menu_lang_append()
         text = "flash"
         main = TabList(text=text)
         main.surfacing(text)
@@ -63,7 +83,7 @@ class Contero(MDApp):
 
         details = TabDetails(text="equalizer")
         self.root.ids.android_tabs.add_widget(details)
-        Clock.schedule_once(lambda dt: main.discover(details), 5)
+        Clock.schedule_once(lambda dt: main.discover(details), 4)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         """Called when switching tabs.

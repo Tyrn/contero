@@ -1,9 +1,9 @@
 BoxLayout:
     orientation: "vertical"
-
-    #MDToolbar:
-    #    title: "Example Tabs"
-
+    MDToolbar:
+        id: toolbar
+        title: "Power Supplies"
+        right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: print('dots-vertical')], ]
     MDTabs:
         id: android_tabs
         on_tab_switch: app.on_tab_switch(*args)
@@ -27,6 +27,8 @@ BoxLayout:
     MDIconButton:
         id: icon
         user_font_size: "48sp"
+        theme_text_color: "Custom"
+        text_color: 1, 0, 0, 1
         pos_hint: {"center_x": .9, "center_y": .9}
     MDLabel:
         id: label
