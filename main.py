@@ -79,7 +79,7 @@ class Contero(MDApp):
 
     def build(self):
         global T
-        T = co_lang.LANG["RU"]
+        T = co_lang.LANG["EN"]
         store = JsonStore("co_T.json")
         if store.exists("co-lang"):
             lng = store.get("co-lang")["name"]
@@ -88,7 +88,7 @@ class Contero(MDApp):
         return Builder.load_file("main.kv")
 
     def on_start(self):
-        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.primary_palette = "Gray"
         # self.theme_cls.primary_hue = '900'
 
         self.menu_lang_append()

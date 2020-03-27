@@ -2,15 +2,16 @@
 #:import T __main__.T
 BoxLayout:
     orientation: "vertical"
-    MDToolbar:
-        id: toolbar
-        title: T["co-toolbar-title"]
-        #icon: "git"
-        type: "top"
-        right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: print('dots-vertical')], ]
     MDTabs:
         id: android_tabs
         on_tab_switch: app.on_tab_switch(*args)
+    MDBottomAppBar:
+        MDToolbar:
+            id: toolbar
+            title: T["co-toolbar-title"]
+            icon: "eye"
+            type: "bottom"
+            right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: print('dots-vertical')], ]
 
 
 <TabList>:
