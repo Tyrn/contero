@@ -24,7 +24,7 @@ class PowerListItem(OneLineListItem):
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             if touch.is_double_tap:
-                tabs = MDApp.get_running_app().root.ids.android_tabs
+                tabs = MDApp.get_running_app().root.ids.ps_tabs
                 # Just like your on_release.
                 tabs.tab_bar.parent.dispatch(
                     "on_tab_switch",
@@ -47,7 +47,7 @@ class TabList(FloatLayout, MDTabsBase):
         for i in range(30):
             item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>4}")
             item.tab_details = tab_details
-            self.ids.container.add_widget(item)
+            self.ids.ps_list.add_widget(item)
 
 
 class TabDetails(FloatLayout, MDTabsBase):
@@ -95,10 +95,10 @@ class Contero(MDApp):
         text = "flash"
         main = TabList(text=text)
         main.surfacing(text)
-        self.root.ids.android_tabs.add_widget(main)
+        self.root.ids.ps_tabs.add_widget(main)
 
         details = TabDetails(text="equalizer")
-        self.root.ids.android_tabs.add_widget(details)
+        self.root.ids.ps_tabs.add_widget(details)
         Clock.schedule_once(lambda dt: main.discover(details), 4)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
