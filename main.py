@@ -44,6 +44,7 @@ class TabList(FloatLayout, MDTabsBase):
         pass
 
     def discover(self, tab_details):
+        self.ids.ps_discovery_spinner.active = False
         for i in range(30):
             item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>4}")
             item.tab_details = tab_details
@@ -99,7 +100,8 @@ class Contero(MDApp):
 
         details = TabDetails(text="equalizer")
         self.root.ids.ps_tabs.add_widget(details)
-        Clock.schedule_once(lambda dt: main.discover(details), 4)
+        main.ids.ps_discovery_spinner.active = True
+        Clock.schedule_once(lambda dt: main.discover(details), 5)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         """Called when switching tabs.

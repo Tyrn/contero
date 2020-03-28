@@ -25,14 +25,15 @@ BoxLayout:
         effect_cls: "ScrollEffect"
         scroll_type: ["bars", "content"]
         scroll_distance: 5
-        scroll_timeout: 250
+        scroll_timeout: 50
         MDList:
             id: ps_list
     MDSpinner:
+        id: ps_discovery_spinner
         size_hint: None, None
         size: dp(46), dp(46)
-        pos_hint: {'center_x': .5, 'center_y': .2}
-        active: True
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        active: False
 
 
 <TabDetails>:
