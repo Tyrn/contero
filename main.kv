@@ -13,6 +13,7 @@ BoxLayout:
             title: T["co-toolbar-title"]
             icon: "eye"
             type: "bottom"
+            on_action_button: app.on_discovery_request(self.icon)
             right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: print('dots-vertical')], ]
 
 
@@ -40,9 +41,11 @@ BoxLayout:
     IconLeftWidget:
         id: item_left
         icon: "earth"
-    #RightCheckbox:
-    RightSelectButton:
-        icon: "earth"
+    #RightSelectButton:
+
+
+<RightSelectButton>:
+    icon: "arrow-right"
 
 
 <TabDetails>:

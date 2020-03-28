@@ -10,7 +10,7 @@ from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
-from kivymd.uix.list import IRightBodyTouch, TwoLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
@@ -20,23 +20,36 @@ T = None
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
-    '''Custom right container.'''
+    """Custom right container."""
 
 
 class RightSelectButton(IRightBodyTouch, MDIconButton):
-    '''Custom right container.'''
+    """Custom right container."""
+
+    def on_release(self):
+        self.tab_details.ids.pd_absence_label.text = (
+            self.item_text + f",  {T['co-details-l']}"
+        )
+        tabs = MDApp.get_running_app().root.ids.ps_tabs
+        # Just like your on_release.
+        tabs.tab_bar.parent.dispatch(
+            "on_tab_switch",
+            self.tab_details,
+            self.tab_details.tab_label,
+            md_icons[self.tab_details.text],
+        )
+        tabs.tab_bar.parent.carousel.load_slide(self.tab_details)
 
 
-class PowerListItem(TwoLineAvatarIconListItem):
+class PowerListItem(OneLineAvatarIconListItem):
     """The engaged power supply item."""
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             if touch.is_double_tap:
-
-                details = self.tab_details.ids
-                details.pd_absence_label.text = self.text + f",  {T['co-details-l']}"
-
+                self.tab_details.ids.pd_absence_label.text = (
+                    self.text + f",  {T['co-details-l']}"
+                )
                 tabs = MDApp.get_running_app().root.ids.ps_tabs
                 # Just like your on_release.
                 tabs.tab_bar.parent.dispatch(
@@ -59,10 +72,14 @@ class TabList(FloatLayout, MDTabsBase):
     def discover(self, tab_details):
         self.ids.ps_discovery_spinner.active = False
         for i in range(30):
-            item = PowerListItem(
-                text=T["co-ps-label-1"] + f" {i + 1:>2}",
-                secondary_text="flash",
-            )
+            item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>2}")
+            # Adding a button manually to the item
+            # (and passing down tab_details handle).
+            btn_to = RightSelectButton()
+            btn_to.tab_details = tab_details
+            btn_to.item_text = item.text
+            item.add_widget(btn_to)
+
             item.ids.item_left.icon = "flash"
             item.tab_details = tab_details
             self.ids.ps_list.add_widget(item)
@@ -133,6 +150,10 @@ class Contero(MDApp):
         print(f"instance_tab_label: {instance_tab_label}")
         print(f"tab_text: {tab_text}")
         instance_tab.surfacing(tab_text)
+
+    def on_discovery_request(self, icon):
+        # _touchable_widgets.remove(widget) widget.post_removal_cleanup(self) def
+        print(f"YYYYYY")
 
 
 Contero().run()
