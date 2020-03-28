@@ -69,9 +69,9 @@ class TabList(FloatLayout, MDTabsBase):
     def surfacing(self, tab_text):
         pass
 
-    def discover(self, tab_details):
+    def discover(self, tab_details, cnt=30):
         self.ids.ps_discovery_spinner.active = False
-        for i in range(30):
+        for i in range(cnt):
             item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>2}")
             # Adding a button manually to the item
             # (and passing down tab_details handle).
@@ -129,10 +129,12 @@ class Contero(MDApp):
         self.menu_lang_append()
         text = "flash"
         tab_list = TabList(text=text)
+        self.power_supply_list = tab_list
         tab_list.surfacing(text)
         self.root.ids.ps_tabs.add_widget(tab_list)
 
         tab_details = TabDetails(text="equalizer")
+        self.power_supply_details = tab_details
         self.root.ids.ps_tabs.add_widget(tab_details)
         tab_list.ids.ps_discovery_spinner.active = True
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details), 5)
@@ -153,7 +155,9 @@ class Contero(MDApp):
 
     def on_discovery_request(self, icon):
         # _touchable_widgets.remove(widget) widget.post_removal_cleanup(self) def
-        print(f"YYYYYY")
+        ps_list = self.power_supply_list.ids.ps_list
+        ps_list.clear_widgets()
+        self.power_supply_list.discover(self.power_supply_details, 5)
 
 
 Contero().run()
