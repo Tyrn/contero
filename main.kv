@@ -36,25 +36,29 @@ BoxLayout:
         active: False
 
 
+<PowerListItem>:
+    IconLeftWidget:
+        id: item_left
+        icon: "earth"
+    #RightCheckbox:
+    RightSelectButton:
+        icon: "earth"
+
+
 <TabDetails>:
     MDIconButton:
-        id: icon
+        id: pd_icon
         user_font_size: "48sp"
         theme_text_color: "Custom"
         text_color: 1, 0, 0, 1
         pos_hint: {"center_x": .9, "center_y": .9}
     MDLabel:
-        id: label
+        id: pd_absence_label
         text: T["co-no-ps-selected"]
         halign: "center"
     MDSpinner:
+        id: pd_spinner
         size_hint: None, None
         size: dp(46), dp(46)
         pos_hint: {'center_x': .5, 'center_y': .2}
-        active: True if check.active else False
-    MDCheckbox:
-        id: check
-        size_hint: None, None
-        size: dp(48), dp(48)
-        pos_hint: {'center_x': .5, 'center_y': .1}
-        active: True
+        active: False

@@ -10,20 +10,33 @@ from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
-from kivymd.uix.list import OneLineListItem
-from kivymd.uix.list import TwoLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, TwoLineAvatarIconListItem
+from kivymd.uix.selectioncontrol import MDCheckbox
+from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
 import co_lang
 
 T = None
 
 
-class PowerListItem(OneLineListItem):
+class RightCheckbox(IRightBodyTouch, MDCheckbox):
+    '''Custom right container.'''
+
+
+class RightSelectButton(IRightBodyTouch, MDIconButton):
+    '''Custom right container.'''
+
+
+class PowerListItem(TwoLineAvatarIconListItem):
     """The engaged power supply item."""
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             if touch.is_double_tap:
+
+                details = self.tab_details.ids
+                details.pd_absence_label.text = self.text + f",  {T['co-details-l']}"
+
                 tabs = MDApp.get_running_app().root.ids.ps_tabs
                 # Just like your on_release.
                 tabs.tab_bar.parent.dispatch(
@@ -46,7 +59,11 @@ class TabList(FloatLayout, MDTabsBase):
     def discover(self, tab_details):
         self.ids.ps_discovery_spinner.active = False
         for i in range(30):
-            item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>4}")
+            item = PowerListItem(
+                text=T["co-ps-label-1"] + f" {i + 1:>2}",
+                secondary_text="flash",
+            )
+            item.ids.item_left.icon = "flash"
             item.tab_details = tab_details
             self.ids.ps_list.add_widget(item)
 
@@ -55,7 +72,7 @@ class TabDetails(FloatLayout, MDTabsBase):
     """The engaged power supply details tab."""
 
     def surfacing(self, tab_text):
-        self.ids.icon.icon = "equalizer"
+        self.ids.pd_icon.icon = "earth"
 
 
 class Contero(MDApp):
@@ -94,14 +111,14 @@ class Contero(MDApp):
 
         self.menu_lang_append()
         text = "flash"
-        main = TabList(text=text)
-        main.surfacing(text)
-        self.root.ids.ps_tabs.add_widget(main)
+        tab_list = TabList(text=text)
+        tab_list.surfacing(text)
+        self.root.ids.ps_tabs.add_widget(tab_list)
 
-        details = TabDetails(text="equalizer")
-        self.root.ids.ps_tabs.add_widget(details)
-        main.ids.ps_discovery_spinner.active = True
-        Clock.schedule_once(lambda dt: main.discover(details), 5)
+        tab_details = TabDetails(text="equalizer")
+        self.root.ids.ps_tabs.add_widget(tab_details)
+        tab_list.ids.ps_discovery_spinner.active = True
+        Clock.schedule_once(lambda dt: tab_list.discover(tab_details), 5)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         """Called when switching tabs.

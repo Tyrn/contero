@@ -7,6 +7,8 @@ _EN = {
     "co-ps-label-1": "Power supply",
     "co-exit": "Exit",
     "co-discover-ps": "Discover",
+    "co-details": "Details",
+    "co-details-l": "details",
 }
 
 
@@ -16,6 +18,8 @@ _RU = {
     "co-ps-label-1": "Источник",
     "co-exit": "Выход",
     "co-discover-ps": "Обнаружить источники",
+    "co-details": "Детали",
+    "co-details-l": "детали",
 }
 
 
