@@ -148,7 +148,7 @@ class Contero(MDApp):
         print(f"tab_text: {tab_text}")
         instance_tab.surfacing(tab_text)
 
-    def on_discovery_request(self, icon):
+    def discovery_request(self, icon):
         tab_list = self.power_supply_list
         tab_list.ids.ps_list.clear_widgets()
 
@@ -156,7 +156,7 @@ class Contero(MDApp):
 
         tab_list.ids.ps_discovery_spinner.active = True
         tab_details = self.power_supply_details
-        Clock.schedule_once(lambda dt: tab_list.discover(tab_details, 5), 5)
+        Clock.schedule_once(lambda dt: tab_list.discover(tab_details, 5), 2)
 
 
 Contero().run()
