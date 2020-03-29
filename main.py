@@ -154,10 +154,23 @@ class Contero(MDApp):
         instance_tab.surfacing(tab_text)
 
     def on_discovery_request(self, icon):
-        # _touchable_widgets.remove(widget) widget.post_removal_cleanup(self) def
-        ps_list = self.power_supply_list.ids.ps_list
-        ps_list.clear_widgets()
-        self.power_supply_list.discover(self.power_supply_details, 5)
+        tab_list = self.power_supply_list
+        tab_list.ids.ps_list.clear_widgets()
+        tab_details = self.power_supply_details
+
+        tabs = MDApp.get_running_app().root.ids.ps_tabs
+        # Just like your on_release.
+        tabs.tab_bar.parent.dispatch(
+            "on_tab_switch",
+            tab_details,
+            tab_details.tab_label,
+            md_icons[tab_list.text],
+        )
+        tabs.tab_bar.parent.carousel.load_slide(tab_list)
+
+        #tab_list.discover(tab_details, 5)
+        tab_list.ids.ps_discovery_spinner.active = True
+        Clock.schedule_once(lambda dt: tab_list.discover(tab_details, 5), 5)
 
 
 Contero().run()
