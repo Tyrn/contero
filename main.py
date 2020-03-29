@@ -30,15 +30,7 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
         self.tab_details.ids.pd_absence_label.text = (
             self.item_text + f",  {T['co-details-l']}"
         )
-        tabs = MDApp.get_running_app().root.ids.ps_tabs
-        # Just like your on_release.
-        tabs.tab_bar.parent.dispatch(
-            "on_tab_switch",
-            self.tab_details,
-            self.tab_details.tab_label,
-            md_icons[self.tab_details.text],
-        )
-        tabs.tab_bar.parent.carousel.load_slide(self.tab_details)
+        Contero.select_tab(self.tab_details)
 
 
 class PowerListItem(OneLineAvatarIconListItem):
@@ -50,15 +42,7 @@ class PowerListItem(OneLineAvatarIconListItem):
                 self.tab_details.ids.pd_absence_label.text = (
                     self.text + f",  {T['co-details-l']}"
                 )
-                tabs = MDApp.get_running_app().root.ids.ps_tabs
-                # Just like your on_release.
-                tabs.tab_bar.parent.dispatch(
-                    "on_tab_switch",
-                    self.tab_details,
-                    self.tab_details.tab_label,
-                    md_icons[self.tab_details.text],
-                )
-                tabs.tab_bar.parent.carousel.load_slide(self.tab_details)
+                Contero.select_tab(self.tab_details)
                 return True
         return super(PowerListItem, self).on_touch_down(touch)
 
@@ -112,6 +96,18 @@ class Contero(MDApp):
                 }
             )
 
+    @staticmethod
+    def select_tab(destination_tab):
+        tabs = MDApp.get_running_app().root.ids.ps_tabs
+        # Just like your on_release.
+        tabs.tab_bar.parent.dispatch(
+            "on_tab_switch",
+            destination_tab,
+            destination_tab.tab_label,
+            md_icons[destination_tab.text],
+        )
+        tabs.tab_bar.parent.carousel.load_slide(destination_tab)
+
     def build(self):
         global T
         T = co_lang.LANG["EN"]
@@ -156,20 +152,11 @@ class Contero(MDApp):
     def on_discovery_request(self, icon):
         tab_list = self.power_supply_list
         tab_list.ids.ps_list.clear_widgets()
-        tab_details = self.power_supply_details
 
-        tabs = MDApp.get_running_app().root.ids.ps_tabs
-        # Just like your on_release.
-        tabs.tab_bar.parent.dispatch(
-            "on_tab_switch",
-            tab_details,
-            tab_details.tab_label,
-            md_icons[tab_list.text],
-        )
-        tabs.tab_bar.parent.carousel.load_slide(tab_list)
+        Contero.select_tab(tab_list)
 
-        #tab_list.discover(tab_details, 5)
         tab_list.ids.ps_discovery_spinner.active = True
+        tab_details = self.power_supply_details
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details, 5), 5)
 
 
