@@ -27,22 +27,22 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
     """Custom right container."""
 
     def on_release(self):
-        self.tab_details.ids.pd_absence_label.text = (
-            self.item_text + f",  {T['co-details-l']}"
-        )
-        Contero.select_tab(self.tab_details)
+        self.power_list_item.select_details()
 
 
 class PowerListItem(OneLineAvatarIconListItem):
     """The engaged power supply item."""
 
+    def select_details(self):
+        self.tab_details.ids.pd_absence_label.text = (
+            self.text + f",  {T['co-details-l']}"
+        )
+        Contero.select_tab(self.tab_details)
+
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             if touch.is_double_tap:
-                self.tab_details.ids.pd_absence_label.text = (
-                    self.text + f",  {T['co-details-l']}"
-                )
-                Contero.select_tab(self.tab_details)
+                self.select_details()
                 return True
         return super(PowerListItem, self).on_touch_down(touch)
 
@@ -58,10 +58,9 @@ class TabList(FloatLayout, MDTabsBase):
         for i in range(cnt):
             item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>2}")
             # Adding a button manually to the item
-            # (and passing down tab_details handle).
+            # (and passing down the item handle).
             btn_to = RightSelectButton()
-            btn_to.tab_details = tab_details
-            btn_to.item_text = item.text
+            btn_to.power_list_item = item
             item.add_widget(btn_to)
 
             item.ids.item_left.icon = "flash"
