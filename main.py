@@ -27,17 +27,17 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
     """Custom right container."""
 
     def on_release(self):
-        self.power_list_item.select_details()
+        self.power__list_item.select_details()
 
 
 class PowerListItem(OneLineAvatarIconListItem):
     """The engaged power supply item."""
 
     def select_details(self):
-        self.tab_details.ids.pd_absence_label.text = (
+        self.tab__details.ids.pd_absence_label.text = (
             self.text + f",  {T['co-details-l']}"
         )
-        Contero.select_tab(self.tab_details)
+        Contero.select_tab(self.tab__details)
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
@@ -60,11 +60,11 @@ class TabList(FloatLayout, MDTabsBase):
             # Adding a button manually to the item
             # (and passing down the item handle).
             btn_to = RightSelectButton()
-            btn_to.power_list_item = item
+            btn_to.power__list_item = item
             item.add_widget(btn_to)
 
             item.ids.item_left.icon = "flash"
-            item.tab_details = tab_details
+            item.tab__details = tab_details
             self.ids.ps_list.add_widget(item)
 
 
@@ -124,12 +124,12 @@ class Contero(MDApp):
         self.menu_lang_append()
         text = "flash"
         tab_list = TabList(text=text)
-        self.power_supply_list = tab_list
+        self.power__supply_list = tab_list
         tab_list.surfacing(text)
         self.root.ids.ps_tabs.add_widget(tab_list)
 
         tab_details = TabDetails(text="equalizer")
-        self.power_supply_details = tab_details
+        self.power__supply_details = tab_details
         self.root.ids.ps_tabs.add_widget(tab_details)
         tab_list.ids.ps_discovery_spinner.active = True
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details), 5)
@@ -149,13 +149,13 @@ class Contero(MDApp):
         instance_tab.surfacing(tab_text)
 
     def discovery_request(self, icon):
-        tab_list = self.power_supply_list
+        tab_list = self.power__supply_list
         tab_list.ids.ps_list.clear_widgets()
 
         Contero.select_tab(tab_list)
 
         tab_list.ids.ps_discovery_spinner.active = True
-        tab_details = self.power_supply_details
+        tab_details = self.power__supply_details
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details, 5), 2)
 
 
