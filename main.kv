@@ -9,12 +9,12 @@ BoxLayout:
         #TabDetais:
     MDBottomAppBar:
         MDToolbar:
-            id: toolbar
+            id: ps_toolbar
             title: T["co-toolbar-title"]
             icon: "eye"
             type: "bottom"
-            on_action_button: app.discovery_request(self.icon)
-            right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: print('dots-vertical')], ]
+            on_action_button: app.discovery_request(self)
+            right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
 
 
 <TabList>:
@@ -74,6 +74,8 @@ BoxLayout:
                 size_hint: 1, None
                 size: self.texture_size
                 padding: dp(24), dp(12)
+            PowerGraph:
+                size_hint: 1, None
             MDIconButton:
                 icon: "android"
                 user_font_size: "48sp"

@@ -2,12 +2,19 @@ from functools import partial
 import kivy
 
 kivy.require("1.11.1")
+from kivy.utils import platform
+
+print(f"platform: {platform}")
+
 from kivy.storage.jsonstore import JsonStore
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.clock import Clock
 from kivymd.app import MDApp
+from kivy.metrics import dp
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
@@ -15,8 +22,15 @@ from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
 import co_lang
+from math import sin
+from kivy_garden.graph import Graph, MeshLinePlot
+
 
 T = None
+
+
+class PowerGraph(Graph):
+    pass
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
@@ -54,6 +68,8 @@ class TabList(FloatLayout, MDTabsBase):
         pass
 
     def discover(self, tab_details, cnt=30):
+        toolbar = MDApp.get_running_app().root.ids.ps_toolbar
+        toolbar.icon = "eye"
         self.ids.ps_discovery_spinner.active = False
         for i in range(cnt):
             item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>2}")
@@ -76,6 +92,28 @@ class TabDetails(FloatLayout, MDTabsBase):
 
 
 class Contero(MDApp):
+    menu_main = ObjectProperty()
+
+    def menu_main_callback(self, text):
+        if text == T["co-about"]:
+            dialog = MDDialog(
+                title=T["co-app-name"],
+                size_hint=(0.8, 0.3),
+                text_button_ok=T["co-close"],
+                text=T["co-app-running-on"] + f" {platform}",
+            )
+            dialog.open()
+
+    def menu_main_append(self):
+        self.menu_main = MDDropdownMenu(width_mult=3)
+        self.menu_main.items.append(
+            {
+                "viewclass": "MDMenuItem",
+                "text": T["co-about"],
+                "callback": self.menu_main_callback,
+            }
+        )
+
     menu_lang = ObjectProperty()
 
     def menu_lang_callback(self, lng):
@@ -121,6 +159,7 @@ class Contero(MDApp):
         self.theme_cls.primary_palette = "Gray"
         # self.theme_cls.primary_hue = '900'
 
+        self.menu_main_append()
         self.menu_lang_append()
         text = "flash"
         tab_list = TabList(text=text)
@@ -131,6 +170,9 @@ class Contero(MDApp):
         tab_details = TabDetails(text="equalizer")
         self.power__supply_details = tab_details
         self.root.ids.ps_tabs.add_widget(tab_details)
+
+        toolbar = self.root.ids.ps_toolbar
+        toolbar.icon = "eye-outline"
         tab_list.ids.ps_discovery_spinner.active = True
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details), 5)
 
@@ -148,7 +190,8 @@ class Contero(MDApp):
         print(f"tab_text: {tab_text}")
         instance_tab.surfacing(tab_text)
 
-    def discovery_request(self, icon):
+    def discovery_request(self, toolbar):
+        toolbar.icon = "eye-outline"
         tab_list = self.power__supply_list
         tab_list.ids.ps_list.clear_widgets()
 

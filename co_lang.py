@@ -9,6 +9,10 @@ _EN = {
     "co-discover-ps": "Discover",
     "co-details": "Details",
     "co-details-l": "details",
+    "co-about": "About",
+    "co-close": "Close",
+    "co-app-name": "Contero",
+    "co-app-running-on": "Running on",
 }
 
 
@@ -20,6 +24,10 @@ _RU = {
     "co-discover-ps": "Обнаружить источники",
     "co-details": "Детали",
     "co-details-l": "детали",
+    "co-about": "О приложении",
+    "co-close": "Закрыть",
+    "co-app-name": "Contero",
+    "co-app-running-on": "Выполняется на",
 }
 
 
