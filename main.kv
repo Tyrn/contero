@@ -5,8 +5,61 @@ BoxLayout:
     MDTabs:
         id: ps_tabs
         on_tab_switch: app.on_tab_switch(*args)
-        #TabList:
-        #TabDetais:
+        TabList:
+            id: ps_tab_list
+            text: "flash"
+            ScrollView:
+                bar_margin: 5
+                bar_width: 15
+                bar_color: .0, .8, .0, 1
+                bar_inactive_color: .5, .5, .5, 1
+                effect_cls: "ScrollEffect"
+                scroll_type: ["bars", "content"]
+                scroll_distance: 5
+                scroll_timeout: 50
+                MDList:
+                    id: ps_list
+            MDSpinner:
+                id: ps_discovery_spinner
+                size_hint: None, None
+                size: dp(46), dp(46)
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                active: False
+        TabDetails:
+            id: ps_tab_details
+            text: "equalizer"
+            ScrollView:
+                bar_margin: 5
+                bar_width: 15
+                bar_color: .0, .8, .0, 1
+                bar_inactive_color: .5, .5, .5, 1
+                effect_cls: "ScrollEffect"
+                scroll_type: ["bars", "content"]
+                scroll_distance: 5
+                scroll_timeout: 50
+                GridLayout:
+                    padding: dp(46)
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    MDIconButton:
+                        id: pd_icon
+                        user_font_size: "48sp"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1
+                    MDLabel:
+                        id: pd_absence_label
+                        text: T["co-no-ps-selected"]
+                        size_hint: 1, None
+                        size: self.texture_size
+                        padding: dp(24), dp(12)
+                    PowerGraph:
+                        size_hint: 1, None
+                    MDIconButton:
+                        icon: "android"
+                        user_font_size: "48sp"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 1, 1
     MDBottomAppBar:
         MDToolbar:
             id: ps_toolbar
@@ -15,26 +68,6 @@ BoxLayout:
             type: "bottom"
             on_action_button: app.discovery_request(self)
             right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
-
-
-<TabList>:
-    ScrollView:
-        bar_margin: 5
-        bar_width: 15
-        bar_color: .0, .8, .0, 1
-        bar_inactive_color: .5, .5, .5, 1
-        effect_cls: "ScrollEffect"
-        scroll_type: ["bars", "content"]
-        scroll_distance: 5
-        scroll_timeout: 50
-        MDList:
-            id: ps_list
-    MDSpinner:
-        id: ps_discovery_spinner
-        size_hint: None, None
-        size: dp(46), dp(46)
-        pos_hint: {'center_x': .5, 'center_y': .5}
-        active: False
 
 
 <PowerListItem>:
@@ -46,38 +79,3 @@ BoxLayout:
 
 <RightSelectButton>:
     icon: "arrow-right"
-
-
-<TabDetails>:
-    ScrollView:
-        bar_margin: 5
-        bar_width: 15
-        bar_color: .0, .8, .0, 1
-        bar_inactive_color: .5, .5, .5, 1
-        effect_cls: "ScrollEffect"
-        scroll_type: ["bars", "content"]
-        scroll_distance: 5
-        scroll_timeout: 50
-        GridLayout:
-            padding: dp(46)
-            cols: 1
-            size_hint_y: None
-            height: self.minimum_height
-            MDIconButton:
-                id: pd_icon
-                user_font_size: "48sp"
-                theme_text_color: "Custom"
-                text_color: 1, 0, 0, 1
-            MDLabel:
-                id: pd_absence_label
-                text: T["co-no-ps-selected"]
-                size_hint: 1, None
-                size: self.texture_size
-                padding: dp(24), dp(12)
-            PowerGraph:
-                size_hint: 1, None
-            MDIconButton:
-                icon: "android"
-                user_font_size: "48sp"
-                theme_text_color: "Custom"
-                text_color: 1, 0, 1, 1

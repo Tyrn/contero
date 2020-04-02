@@ -48,10 +48,9 @@ class PowerListItem(OneLineAvatarIconListItem):
     """The engaged power supply item."""
 
     def select_details(self):
-        self.tab__details.ids.pd_absence_label.text = (
-            self.text + f",  {T['co-details-l']}"
-        )
-        Contero.select_tab(self.tab__details)
+        ids = MDApp.get_running_app().root.ids
+        ids.pd_absence_label.text = self.text + f",  {T['co-details-l']}"
+        Contero.select_tab(ids.ps_tab_details)
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
@@ -68,9 +67,9 @@ class TabList(FloatLayout, MDTabsBase):
         pass
 
     def discover(self, tab_details, cnt=30):
-        toolbar = MDApp.get_running_app().root.ids.ps_toolbar
-        toolbar.icon = "eye"
-        self.ids.ps_discovery_spinner.active = False
+        ids = MDApp.get_running_app().root.ids
+        ids.ps_toolbar.icon = "eye"
+        ids.ps_discovery_spinner.active = False
         for i in range(cnt):
             item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>2}")
             # Adding a button manually to the item
@@ -80,15 +79,14 @@ class TabList(FloatLayout, MDTabsBase):
             item.add_widget(btn_to)
 
             item.ids.item_left.icon = "flash"
-            item.tab__details = tab_details
-            self.ids.ps_list.add_widget(item)
+            ids.ps_list.add_widget(item)
 
 
 class TabDetails(FloatLayout, MDTabsBase):
     """The engaged power supply details tab."""
 
     def surfacing(self, tab_text):
-        self.ids.pd_icon.icon = "earth"
+        MDApp.get_running_app().root.ids.pd_icon.icon = "earth"
 
 
 class Contero(MDApp):
@@ -161,19 +159,12 @@ class Contero(MDApp):
 
         self.menu_main_append()
         self.menu_lang_append()
-        text = "flash"
-        tab_list = TabList(text=text)
-        self.power__supply_list = tab_list
-        tab_list.surfacing(text)
-        self.root.ids.ps_tabs.add_widget(tab_list)
 
-        tab_details = TabDetails(text="equalizer")
-        self.power__supply_details = tab_details
-        self.root.ids.ps_tabs.add_widget(tab_details)
+        tab_list = self.root.ids.ps_tab_list
+        tab_details = self.root.ids.ps_tab_details
 
-        toolbar = self.root.ids.ps_toolbar
-        toolbar.icon = "eye-outline"
-        tab_list.ids.ps_discovery_spinner.active = True
+        self.root.ids.ps_toolbar.icon = "eye-outline"
+        self.root.ids.ps_discovery_spinner.active = True
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details), 5)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
@@ -192,13 +183,13 @@ class Contero(MDApp):
 
     def discovery_request(self, toolbar):
         toolbar.icon = "eye-outline"
-        tab_list = self.power__supply_list
-        tab_list.ids.ps_list.clear_widgets()
+        tab_list = self.root.ids.ps_tab_list
+        self.root.ids.ps_list.clear_widgets()
 
         Contero.select_tab(tab_list)
 
-        tab_list.ids.ps_discovery_spinner.active = True
-        tab_details = self.power__supply_details
+        self.root.ids.ps_discovery_spinner.active = True
+        tab_details = self.root.ids.ps_tab_details
         Clock.schedule_once(lambda dt: tab_list.discover(tab_details, 5), 2)
 
 
