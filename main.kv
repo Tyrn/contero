@@ -66,7 +66,8 @@ BoxLayout:
             title: T["co-toolbar-title"]
             icon: "eye"
             type: "bottom"
-            on_action_button: app.discovery_request(self)
+            animate_action_button: False
+            on_action_button: app.discovery_request()
             right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
 
 
