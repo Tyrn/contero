@@ -1,5 +1,6 @@
 #:kivy 1.11.1
 #:import T __main__.T
+#:import ACTION_ICON __main__.ACTION_ICON
 BoxLayout:
     orientation: "vertical"
     MDTabs:
@@ -19,12 +20,6 @@ BoxLayout:
                 scroll_timeout: 50
                 MDList:
                     id: ps_list
-            MDSpinner:
-                id: ps_discovery_spinner
-                size_hint: None, None
-                size: dp(46), dp(46)
-                pos_hint: {'center_x': .5, 'center_y': .5}
-                active: False
         TabDetails:
             id: ps_tab_details
             text: "equalizer"
@@ -64,9 +59,10 @@ BoxLayout:
         MDToolbar:
             id: ps_toolbar
             title: T["co-toolbar-title"]
-            icon: "eye"
+            icon: ACTION_ICON
             type: "bottom"
             animate_action_button: False
+            next_icon: app.pulse_icon_counter() # Not a callback.
             on_action_button: app.discovery_request()
             right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
 

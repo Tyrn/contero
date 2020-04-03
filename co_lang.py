@@ -1,6 +1,10 @@
 """Labels in supported languages
 """
 
+
+T = None
+
+
 _EN = {
     "co-toolbar-title": "Power Supplies",
     "co-no-ps-selected": "No power supply selected",

@@ -22,27 +22,12 @@ from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
 import co_lang
+from co_lang import T
 from math import sin
 from kivy_garden.graph import Graph, MeshLinePlot
 
 
-T = None
-
-
-def pulse_icon_counter():
-    icons = "heart", "heart-outline"
-    i = 0
-
-    def next():
-        nonlocal icons, i
-        icon = icons[i % len(icons)]
-        i += 1
-        return icon
-
-    return next
-
-
-next_pulse_icon = pulse_icon_counter()
+ACTION_ICON = "eye"
 
 
 class PowerGraph(Graph):
@@ -113,9 +98,7 @@ class Contero(MDApp):
                 title=T["co-app-name"],
                 size_hint=(0.8, 0.3),
                 text_button_ok=T["co-close"],
-                text=T["co-app-running-on"]
-                + f" {platform}"
-                + f" ({next_pulse_icon()})",
+                text=T["co-app-running-on"] + f" {platform}",
             )
             dialog.open()
 
@@ -160,12 +143,24 @@ class Contero(MDApp):
         )
         tabs.tab_bar.parent.carousel.load_slide(destination_tab)
 
+    def pulse_icon_counter(self):
+        icons = "timer-sand-full", "timer-sand", "timer-sand-empty"
+        i = 0
+
+        def next():
+            nonlocal icons, i
+            icon = icons[i % len(icons)]
+            i += 1
+            return icon
+
+        return next
+
     def animate_await(self):
         toolbar = MDApp.get_running_app().root.ids.ps_toolbar
         if toolbar.animate_action_button:
-            toolbar.icon = next_pulse_icon()
+            toolbar.icon = toolbar.next_icon()
             return True
-        toolbar.icon = "eye"
+        toolbar.icon = ACTION_ICON
         return False
 
     def build(self):
@@ -184,10 +179,9 @@ class Contero(MDApp):
 
         self.menu_main_append()
         self.menu_lang_append()
-        self.discovery_request(30, 4)
+        # Clock.schedule_once(lambda dt: self.discovery_request(30, 5), 5)
 
-
-    def discovery_request(self, item_count=5, delay=2):
+    def discovery_request(self, item_count=5, delay=3):
         tab_list = self.root.ids.ps_tab_list
         self.root.ids.ps_list.clear_widgets()
 
@@ -196,10 +190,12 @@ class Contero(MDApp):
         tab_details = self.root.ids.ps_tab_details
 
         self.root.ids.ps_toolbar.animate_action_button = True
-        self.root.ids.ps_toolbar.icon = next_pulse_icon()
+        self.animate_await()
         Clock.schedule_interval(lambda dt: self.animate_await(), 1.0)
 
-        Clock.schedule_once(lambda dt: tab_list.discover(tab_details, item_count), delay)
+        Clock.schedule_once(
+            lambda dt: tab_list.discover(tab_details, item_count), delay
+        )
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         """Called when switching tabs.
