@@ -144,7 +144,7 @@ class Contero(MDApp):
         tabs.tab_bar.parent.carousel.load_slide(destination_tab)
 
     def pulse_icon_counter(self):
-        icons = "timer-sand-full", "timer-sand", "timer-sand-empty"
+        icons = "refresh", "refresh-circle"
         i = 0
 
         def next():
