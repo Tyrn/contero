@@ -13,6 +13,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivy.metrics import dp
+from kivy.uix.widget import Widget
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
@@ -30,27 +31,11 @@ from kivy_garden.graph import Graph, MeshLinePlot
 ACTION_ICON = "eye"
 
 
-class PowerGraph(Graph):
-    def __init__(self, **kwargs):
-        super(PowerGraph, self).__init__(
-            xlabel="X",
-            ylabel="Y",
-            x_ticks_minor=5,
-            x_ticks_major=25,
-            y_ticks_major=1,
-            y_grid_label=True,
-            x_grid_label=True,
-            padding=5,
-            x_grid=True,
-            y_grid=True,
-            xmin=-0,
-            xmax=100,
-            ymin=-1,
-            ymax=1,
-        )
-        self.plot = MeshLinePlot(color=[1, 0, 0, 1])
-        self.plot.points = [(x, sin(x / 10.0)) for x in range(0, 101)]
-        self.add_plot(self.plot)
+class PowerGraph(Widget):
+    def update_graph(self):
+        plot = MeshLinePlot(color=[1, 0, 0, 1])
+        plot.points = [(x, sin(x / 10.0)) for x in range(0, 101)]
+        self.ids.graph_test.add_plot(plot)
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
