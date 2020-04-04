@@ -48,14 +48,14 @@ BoxLayout:
                         size_hint: 1, None
                         size: self.texture_size
                         padding: dp(24), dp(12)
-                    RelativeLayout:
+                    GridLayout:
+                        cols: 1
+                        size_hint_y: None
+                        height: 300
+                        #size_hint_x: None
+                        #width: 600
                         PowerGraph:
-                            size_hint: 1, None
-                    MDIconButton:
-                        icon: "android"
-                        user_font_size: "96sp"
-                        theme_text_color: "Custom"
-                        text_color: 1, 0, 1, 1
+                            #size_hint: 1, None
                     MDIconButton:
                         icon: "android"
                         user_font_size: "24sp"
