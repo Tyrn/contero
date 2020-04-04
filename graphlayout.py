@@ -1,4 +1,5 @@
 from math import sin
+from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -9,14 +10,17 @@ class SetGraph(Widget):
     def update_graph(self):
         plot = MeshLinePlot(color=[1, 0, 0, 1])
         plot.points = [(x, sin(x / 10.0)) for x in range(0, 101)]
-        self.ids.graph_test.add_plot(plot)
+        App.get_running_app().root.ids.graph_test.add_plot(plot)
 
 
 class GraphLayoutApp(App):
     def build(self):
-        disp = SetGraph()
-        disp.update_graph()
-        return disp
+        return Builder.load_file("graphlayout.kv")
+
+    def on_start(self):
+        """On Start"""
+        ids = self.root.ids
+        ids.g_test.update_graph()
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivy.metrics import dp
@@ -31,11 +32,11 @@ from kivy_garden.graph import Graph, MeshLinePlot
 ACTION_ICON = "eye"
 
 
-class PowerGraph(Widget):
+class PowerGrid(GridLayout):
     def update_graph(self):
         plot = MeshLinePlot(color=[1, 0, 0, 1])
         plot.points = [(x, sin(x / 10.0)) for x in range(0, 101)]
-        self.ids.graph_test.add_plot(plot)
+        MDApp.get_running_app().root.ids.graph_test.add_plot(plot)
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
@@ -55,6 +56,7 @@ class PowerListItem(OneLineAvatarIconListItem):
     def select_details(self):
         ids = MDApp.get_running_app().root.ids
         ids.pd_absence_label.text = self.text + f",  {T['co-details-l']}"
+        ids.pg_test.update_graph()
         Contero.select_tab(ids.ps_tab_details)
 
     def on_touch_down(self, touch):
