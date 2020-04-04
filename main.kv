@@ -33,7 +33,7 @@ BoxLayout:
                 scroll_distance: 5
                 scroll_timeout: 50
                 GridLayout:
-                    padding: dp(46)
+                    padding: dp(4)
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height
@@ -48,13 +48,24 @@ BoxLayout:
                         size_hint: 1, None
                         size: self.texture_size
                         padding: dp(24), dp(12)
-                    PowerGraph:
-                        size_hint: 1, None
+                    RelativeLayout:
+                        PowerGraph:
+                            size_hint: 1, None
                     MDIconButton:
                         icon: "android"
-                        user_font_size: "48sp"
+                        user_font_size: "96sp"
                         theme_text_color: "Custom"
                         text_color: 1, 0, 1, 1
+                    MDIconButton:
+                        icon: "android"
+                        user_font_size: "24sp"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 1, 1
+                    MDIconButton:
+                        icon: "android"
+                        user_font_size: "24sp"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 1, 1
     MDBottomAppBar:
         MDToolbar:
             id: ps_toolbar

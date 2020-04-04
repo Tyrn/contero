@@ -31,7 +31,26 @@ ACTION_ICON = "eye"
 
 
 class PowerGraph(Graph):
-    pass
+    def __init__(self, **kwargs):
+        super(PowerGraph, self).__init__(
+            xlabel="X",
+            ylabel="Y",
+            x_ticks_minor=5,
+            x_ticks_major=25,
+            y_ticks_major=1,
+            y_grid_label=True,
+            x_grid_label=True,
+            padding=5,
+            x_grid=True,
+            y_grid=True,
+            xmin=-0,
+            xmax=100,
+            ymin=-1,
+            ymax=1,
+        )
+        self.plot = MeshLinePlot(color=[1, 0, 0, 1])
+        self.plot.points = [(x, sin(x / 10.0)) for x in range(0, 101)]
+        self.add_plot(self.plot)
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
@@ -212,4 +231,5 @@ class Contero(MDApp):
         instance_tab.surfacing(tab_text)
 
 
-Contero().run()
+if __name__ == "__main__":
+    Contero().run()
