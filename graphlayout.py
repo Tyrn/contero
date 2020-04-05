@@ -1,7 +1,11 @@
+import sys
 from math import sin
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
-from kivy.app import App
+if len(sys.argv) > 1:
+    from kivy.app import App
+else:
+    from kivymd.app import MDApp as App
 from kivy.uix.widget import Widget
 from kivy_garden.graph import Graph, MeshLinePlot
 
