@@ -27,13 +27,13 @@ from kivymd.icon_definitions import md_icons
 import co_lang
 from co_lang import T
 from math import sin
-from kivy_garden.graph import Graph, LinePlot, MeshLinePlot
+from kivy_garden.graph import Graph, MeshStemPlot
 
 
 ACTION_ICON = "eye"
 
 
-XMAX = 10
+XMAX = 100
 
 
 def power_readings():
@@ -64,6 +64,7 @@ def power_points():
         points = []
         for y in stretch:
             points.append((x, y))
+            points.append((x, 0))
             x += 1
         return points
 
@@ -76,12 +77,12 @@ next_points = power_points()
 class PowerGrid(GridLayout):
     def __init__(self, **kwargs):
         super(PowerGrid, self).__init__(**kwargs)
-        self.plot = LinePlot(line_width=2, color=[1, 0, 1, 0.5])
+        self.plot = MeshStemPlot(color=[1, 0, 1, 0.5])
 
     def start(self):
         MDApp.get_running_app().root.ids.graph_test.add_plot(self.plot)
         self.get_value()
-        Clock.schedule_interval(self.get_value, 30.0 / XMAX)
+        Clock.schedule_interval(self.get_value, 3.0)
 
     def stop(self):
         Clock.unschedule(self.get_value)

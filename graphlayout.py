@@ -9,7 +9,7 @@ else:
     from kivymd.app import MDApp as App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
-from kivy_garden.graph import LinePlot
+from kivy_garden.graph import LinePlot, MeshStemPlot
 from kivy.clock import Clock
 from math import sin
 
@@ -45,6 +45,7 @@ def power_points():
         points = []
         for y in stretch:
             points.append((x, y))
+            points.append((x, 0))
             x += 1
         return points
 
@@ -57,7 +58,8 @@ next_points = power_points()
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
-        self.plot = LinePlot(line_width=3, color=[1, 0, 0, 1])
+        # self.plot = LinePlot(line_width=3, color=[1, 0, 0, 1])
+        self.plot = MeshStemPlot(color=[1, 0, 0, 1])
 
     def start(self):
         self.ids.graph.add_plot(self.plot)
