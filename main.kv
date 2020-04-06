@@ -1,7 +1,7 @@
 #:kivy 1.11.1
 #:import T __main__.T
 #:import ACTION_ICON __main__.ACTION_ICON
-#:import MeshLinePlot kivy_garden.graph.MeshLinePlot
+#:import XMAX __main__.XMAX
 BoxLayout:
     orientation: "vertical"
     MDTabs:
@@ -38,48 +38,39 @@ BoxLayout:
                     cols: 1
                     size_hint_y: None
                     #height: self.minimum_height
-                    MDIconButton:
-                        id: pd_icon
-                        user_font_size: "48sp"
-                        theme_text_color: "Custom"
-                        text_color: 1, 0, 0, 1
+                    PowerGrid:
+                        id: pg_test
+                        cols: 1
+                        size_hint_y: None
+                        height: 200
+                        #size_hint_x: None
+                        #width: 600
+                        Graph:
+                            id: graph_test
+                            #xlabel: 'X'
+                            #ylabel: 'Y'
+                            x_ticks_minor :5
+                            x_tics_major :25
+                            y_ticks_major :1
+                            y_grid_label: True
+                            x_grid_label: True
+                            padding :5
+                            x_grid: True
+                            y_grid: True
+                            xmin: -0
+                            xmax: XMAX
+                            ymin: 0
+                            ymax: 1
                     MDLabel:
                         id: pd_absence_label
                         text: T["co-no-ps-selected"]
                         size_hint: 1, None
                         size: self.texture_size
                         padding: dp(24), dp(12)
-                    PowerGrid:
-                        cols: 1
-                        size_hint_y: None
-                        height: 300
-                        #size_hint_x: None
-                        #width: 600
-                        id: pg_test
-                        Graph:
-                            id: graph_test
-                            plot: MeshLinePlot
-                            xlabel: 'X'
-                            ylabel: 'Y'
-                            x_ticks_minor: 5
-                            x_tics_major: 25
-                            y_ticks_major: 1
-                            y_grid_label: True
-                            x_grid_label: True
-                            padding: 5
-                            x_grid: True
-                            y_grid: True
-                            xmin: -0
-                            xmax: 100
-                            ymin: -1
-                            ymax: 1
+                        color: 0, 0, 1, 1
+                        #theme_text_color: "ContrastParentBackground"
                     MDIconButton:
-                        icon: "android"
-                        user_font_size: "24sp"
-                        theme_text_color: "Custom"
-                        text_color: 0, 0, 1, 1
-                    MDIconButton:
-                        icon: "android"
+                        icon: "backburger"
                         user_font_size: "24sp"
                         theme_text_color: "Custom"
                         text_color: 0, 0, 1, 1

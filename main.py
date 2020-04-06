@@ -26,17 +26,67 @@ from kivymd.icon_definitions import md_icons
 import co_lang
 from co_lang import T
 from math import sin
-from kivy_garden.graph import Graph, MeshLinePlot
+from kivy_garden.graph import Graph, LinePlot, MeshLinePlot
 
 
 ACTION_ICON = "eye"
 
 
+XMAX = 10
+
+
+def power_readings():
+    """Returns a provider of the next input data value."""
+    chain = [sin(x / (XMAX * 0.1)) * 0.1 + 0.6 for x in range(0, XMAX + 1)]
+    cnt = 0
+
+    def next():
+        nonlocal chain, cnt
+        next_reading = chain[cnt % len(chain)]
+        cnt += 1
+        return next_reading
+
+    return next
+
+
+def power_points():
+    """Returns a provider of the next renderable points set."""
+    next_reading = power_readings()
+    stretch = []
+
+    def next():
+        nonlocal stretch, next_reading
+        stretch.append(next_reading())
+        if len(stretch) > XMAX + 1:
+            stretch.pop(0)
+        x = XMAX + 1 - len(stretch)
+        points = []
+        for y in stretch:
+            points.append((x, y))
+            x += 1
+        return points
+
+    return next
+
+
+next_points = power_points()
+
+
 class PowerGrid(GridLayout):
-    def update_graph(self):
-        plot = MeshLinePlot(color=[1, 0, 0, 1])
-        plot.points = [(x, sin(x / 10.0)) for x in range(0, 101)]
-        MDApp.get_running_app().root.ids.graph_test.add_plot(plot)
+    def __init__(self, **kwargs):
+        super(PowerGrid, self).__init__(**kwargs)
+        self.plot = LinePlot(line_width=3, color=[1, 0, 0, 1])
+
+    def start(self):
+        MDApp.get_running_app().root.ids.graph_test.add_plot(self.plot)
+        self.get_value()
+        Clock.schedule_interval(self.get_value, 30.0 / XMAX)
+
+    def stop(self):
+        Clock.unschedule(self.get_value)
+
+    def get_value(self, dt=None):
+        self.plot.points = next_points()
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
@@ -56,7 +106,7 @@ class PowerListItem(OneLineAvatarIconListItem):
     def select_details(self):
         ids = MDApp.get_running_app().root.ids
         ids.pd_absence_label.text = self.text + f",  {T['co-details-l']}"
-        ids.pg_test.update_graph()
+        ids.pg_test.start()
         Contero.select_tab(ids.ps_tab_details)
 
     def on_touch_down(self, touch):
@@ -92,7 +142,7 @@ class TabDetails(FloatLayout, MDTabsBase):
     """The engaged power supply details tab."""
 
     def surfacing(self, tab_text):
-        MDApp.get_running_app().root.ids.pd_icon.icon = "earth"
+        pass
 
 
 class Contero(MDApp):

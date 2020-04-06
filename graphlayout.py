@@ -1,49 +1,73 @@
 """Real time plotting of Microphone level using kivy
 """
 
+import sys
+if len(sys.argv) > 1:
+    from kivy.app import App
+else:
+    from kivymd.app import MDApp as App
 from kivy.lang import Builder
-from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy_garden.graph import LinePlot
-from kivy_garden.graph import MeshLinePlot
-from kivy_garden.graph import MeshStemPlot
-from kivy_garden.graph import SmoothLinePlot
 from kivy.clock import Clock
 from math import sin
 
 
-POINTS = [(x, sin(x / 1.0) * .3 + .5) for x in range(0, 11)]
+XMAX = 10
 
 
-def shift(points):
-    global POINTS
-    res = []
+def power_readings():
+    """Returns a provider of the next input data value."""
+    chain = [sin(x / (XMAX * 0.1)) * 0.1 + 0.6 for x in range(0, XMAX + 1)]
+    cnt = 0
 
-    for x, y in POINTS:
-        res.append((x + 1.0, y))
-    x, y = res.pop()
-    res.insert(0, (0, y))
-    POINTS = res
-    return res
+    def next():
+        nonlocal chain, cnt
+        next_reading = chain[cnt % len(chain)]
+        cnt += 1
+        return next_reading
+
+    return next
+
+
+def power_points():
+    """Returns a provider of the next renderable points set."""
+    next_reading = power_readings()
+    stretch = []
+
+    def next():
+        nonlocal stretch, next_reading
+        stretch.append(next_reading())
+        if len(stretch) > XMAX + 1:
+            stretch.pop(0)
+        x = XMAX + 1 - len(stretch)
+        points = []
+        for y in stretch:
+            points.append((x, y))
+            x += 1
+        return points
+
+    return next
+
+
+next_points = power_points()
 
 
 class Logic(BoxLayout):
     def __init__(self, **kwargs):
         super(Logic, self).__init__(**kwargs)
         self.plot = LinePlot(line_width=3, color=[1, 0, 0, 1])
-        #self.plot = MeshLinePlot(color=[1, 0, 0, 1])
-        #self.plot = MeshStemPlot(color=[1, 0, 0, 1])
-        #self.plot = SmoothLinePlot(color=[1, 0, 0, 1])
 
     def start(self):
         self.ids.graph.add_plot(self.plot)
-        Clock.schedule_interval(self.get_value, 1.0)
+        self.get_value()
+        Clock.schedule_interval(self.get_value, 30.0 / XMAX)
 
     def stop(self):
         Clock.unschedule(self.get_value)
 
-    def get_value(self, dt):
-        self.plot.points = shift(POINTS)
+    def get_value(self, dt=None):
+        self.plot.points = next_points()
 
 
 class RealTimeMicrophone(App):
