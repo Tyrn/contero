@@ -16,6 +16,7 @@ from kivymd.app import MDApp
 from kivy.metrics import dp
 from kivy.uix.widget import Widget
 from kivymd.uix.dialog import MDDialog
+from kivy.uix.label import Label
 from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
@@ -75,7 +76,7 @@ next_points = power_points()
 class PowerGrid(GridLayout):
     def __init__(self, **kwargs):
         super(PowerGrid, self).__init__(**kwargs)
-        self.plot = LinePlot(line_width=3, color=[1, 0, 0, 1])
+        self.plot = LinePlot(line_width=2, color=[1, 0, 1, 0.5])
 
     def start(self):
         MDApp.get_running_app().root.ids.graph_test.add_plot(self.plot)

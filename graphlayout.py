@@ -2,6 +2,7 @@
 """
 
 import sys
+
 if len(sys.argv) > 1:
     from kivy.app import App
 else:

@@ -42,7 +42,7 @@ BoxLayout:
                         id: pg_test
                         cols: 1
                         size_hint_y: None
-                        height: 200
+                        height: dp(128)
                         #size_hint_x: None
                         #width: 600
                         Graph:
@@ -61,19 +61,18 @@ BoxLayout:
                             xmax: XMAX
                             ymin: 0
                             ymax: 1
-                    MDLabel:
+                    ColoredLabel:
                         id: pd_absence_label
                         text: T["co-no-ps-selected"]
                         size_hint: 1, None
                         size: self.texture_size
-                        padding: dp(24), dp(12)
-                        color: 0, 0, 1, 1
-                        #theme_text_color: "ContrastParentBackground"
+                        #padding: dp(24), dp(12)
+                        color: 0, 0, 0, 1
                     MDIconButton:
-                        icon: "backburger"
+                        icon: "moon-waning-crescent"
                         user_font_size: "24sp"
                         theme_text_color: "Custom"
-                        text_color: 0, 0, 1, 1
+                        text_color: 1, 0, 1, .5
     MDBottomAppBar:
         MDToolbar:
             id: ps_toolbar
@@ -84,6 +83,16 @@ BoxLayout:
             next_icon: app.pulse_icon_counter() # Not a callback.
             on_action_button: app.discovery_request()
             right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
+
+
+<ColoredLabel@MDLabel>:
+    canvas.before:
+        Color:
+            #rgba: root.background_color
+            rgba: 0, 0, 0, .1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 
 <PowerListItem>:
