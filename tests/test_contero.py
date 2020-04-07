@@ -14,6 +14,6 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(str(15331).zfill(3), "15331")
 
     def test_mac_int(self):
-        self.assertEqual(u.int_to_mac(180462667751767), "a4:21:3d:34:e1:57")
-        self.assertEqual(u.mac_to_int("a4:21:3d:34:e1:57"), 180462667751767)
+        self.assertEqual(u.int_to_mac(0x04_21_3D_34_00_57), "04:21:3d:34:00:57")
+        self.assertEqual(u.mac_to_int("04:21:3d:34:00:57"), 0x04_21_3D_34_00_57)
         self.assertEqual(u.mac_to_int("ff:ff:ff:ff:ff:ff"), u.MAC_MAX)

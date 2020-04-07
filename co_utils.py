@@ -8,7 +8,7 @@ from functools import partial
 random.seed()
 
 
-MAC_MAX = 281474976710655
+MAC_MAX = 0xFF_FF_FF_FF_FF_FF
 
 
 def mac_to_int(mac):

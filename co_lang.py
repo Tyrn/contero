@@ -17,6 +17,7 @@ _EN = {
     "co-close": "Close",
     "co-app-name": "Contero",
     "co-app-running-on": "Running on",
+    "co-output-current-l": "output current",
 }
 
 
@@ -32,6 +33,7 @@ _RU = {
     "co-close": "Закрыть",
     "co-app-name": "Contero",
     "co-app-running-on": "Выполняется на",
+    "co-output-current-l": "ток в нагрузке",
 }
 
 

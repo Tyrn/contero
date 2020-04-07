@@ -47,8 +47,6 @@ BoxLayout:
                         #width: 600
                         Graph:
                             id: graph_test
-                            #xlabel: 'X'
-                            #ylabel: 'Y'
                             x_ticks_minor :5
                             x_tics_major :25
                             y_ticks_major :1
@@ -62,17 +60,23 @@ BoxLayout:
                             ymin: 0
                             ymax: 1
                     ColoredLabel:
-                        id: pd_absence_label
+                        id: pd_main_label
                         text: T["co-no-ps-selected"]
                         size_hint: 1, None
                         size: self.texture_size
                         #padding: dp(24), dp(12)
                         color: 0, 0, 0, 1
-                    MDIconButton:
-                        icon: "moon-waning-crescent"
-                        user_font_size: "24sp"
-                        theme_text_color: "Custom"
-                        text_color: 1, 0, 1, .5
+                    ColoredLabel:
+                        id: pd_mac_label
+                        text: ""
+                        size_hint: 1, None
+                        size: self.texture_size
+                        color: 0, 0, 1, 1
+                    #MDIconButton:
+                    #    icon: "moon-waning-crescent"
+                    #    user_font_size: "24sp"
+                    #    theme_text_color: "Custom"
+                    #    text_color: 1, 0, 1, .5
     MDBottomAppBar:
         MDToolbar:
             id: ps_toolbar

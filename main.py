@@ -21,6 +21,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.list import TwoLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
@@ -28,6 +29,7 @@ import co_lang
 from co_lang import T
 from math import sin
 from kivy_garden.graph import Graph, MeshStemPlot
+from co_utils import rand_mac
 
 
 ACTION_ICON = "eye"
@@ -102,12 +104,13 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
         self.power__list_item.select_details()
 
 
-class PowerListItem(OneLineAvatarIconListItem):
+class PowerListItem(TwoLineAvatarIconListItem):
     """The engaged power supply item."""
 
     def select_details(self):
         ids = MDApp.get_running_app().root.ids
-        ids.pd_absence_label.text = self.text + f",  {T['co-details-l']}"
+        ids.pd_main_label.text = self.text + f",  {T['co-output-current-l']}"
+        ids.pd_mac_label.text = self.secondary_text
         ids.pg_test.start()
         Contero.select_tab(ids.ps_tab_details)
 
@@ -123,13 +126,16 @@ class TabList(FloatLayout, MDTabsBase):
     """The engaged power supplies tab."""
 
     def surfacing(self, tab_text):
-        pass
+        print("trying to stop!")
+        MDApp.get_running_app().root.ids.pg_test.stop()
 
     def discover(self, tab_details, cnt):
         ids = MDApp.get_running_app().root.ids
         ids.ps_toolbar.animate_action_button = False
         for i in range(cnt):
-            item = PowerListItem(text=T["co-ps-label-1"] + f" {i + 1:>2}")
+            item = PowerListItem(
+                text=T["co-ps-label-1"] + f" {i + 1:>2}", secondary_text=rand_mac()
+            )
             # Adding a button manually to the item
             # (and passing down the item handle).
             btn_to = RightSelectButton()
@@ -202,7 +208,7 @@ class Contero(MDApp):
         tabs.tab_bar.parent.carousel.load_slide(destination_tab)
 
     def pulse_icon_counter(self):
-        icons = "refresh", "refresh-circle"
+        icons = "reply", "reply-all"
         i = 0
 
         def next():
