@@ -73,16 +73,23 @@ def power_points():
     return next
 
 
-next_points = power_points()
-
-
-class PowerGrid(GridLayout):
+class PowerPlot(ObjectProperty):
+    """Intended as a ListItem property."""
     def __init__(self, **kwargs):
-        super(PowerGrid, self).__init__(**kwargs)
-        self.plot = MeshStemPlot(color=[1, 0, 1, 0.5])
+        super(PowerPlot, self).__init__(**kwargs)
+        self._plot = MeshStemPlot(color=[1, 0, 1, 0.5])
+        self._next_points = power_points()
+
+    def __del__(self):
+        super(PowerPlot, self).__del__()
+        print("trying to stop!")
+        self.stop()
 
     def start(self):
-        MDApp.get_running_app().root.ids.graph_test.add_plot(self.plot)
+        common_graph = MDApp.get_running_app().root.ids.graph_test
+        for plot in common_graph.plots:
+            common_graph.remove_plot(plot)
+        common_graph.add_plot(self._plot)
         self.get_value()
         Clock.schedule_interval(self.get_value, 3.0)
 
@@ -90,7 +97,12 @@ class PowerGrid(GridLayout):
         Clock.unschedule(self.get_value)
 
     def get_value(self, dt=None):
-        self.plot.points = next_points()
+        self._plot.points = self._next_points()
+
+
+
+class PowerGrid(GridLayout):
+    """Layout containing a Graph."""
 
 
 class RightCheckbox(IRightBodyTouch, MDCheckbox):
@@ -111,7 +123,7 @@ class PowerListItem(TwoLineAvatarIconListItem):
         ids = MDApp.get_running_app().root.ids
         ids.pd_main_label.text = self.text + f",  {T['co-output-current-l']}"
         ids.pd_mac_label.text = self.secondary_text
-        ids.pg_test.start()
+        #self.details__plot.start()
         Contero.select_tab(ids.ps_tab_details)
 
     def on_touch_down(self, touch):
@@ -126,8 +138,7 @@ class TabList(FloatLayout, MDTabsBase):
     """The engaged power supplies tab."""
 
     def surfacing(self, tab_text):
-        print("trying to stop!")
-        MDApp.get_running_app().root.ids.pg_test.stop()
+        pass
 
     def discover(self, tab_details, cnt):
         ids = MDApp.get_running_app().root.ids
@@ -136,6 +147,8 @@ class TabList(FloatLayout, MDTabsBase):
             item = PowerListItem(
                 text=T["co-ps-label-1"] + f" {i + 1:>2}", secondary_text=rand_mac()
             )
+            item.details__plot = PowerPlot()
+            item.details__plot.start()
             # Adding a button manually to the item
             # (and passing down the item handle).
             btn_to = RightSelectButton()
