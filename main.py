@@ -93,20 +93,20 @@ class PowerPlot():
         for plot in common_graph.plots:
             common_graph.remove_plot(plot)
 
-    def select(self):
+    def select_plot(self):
         self.remove_all_plots()
         common_graph = MDApp.get_running_app().root.ids.graph_test
         common_graph.add_plot(self._plot)
 
-    def start(self):
-        self.get_value()
-        Clock.schedule_interval(self.get_value, 3.0)
+    def start_plot(self):
+        self.get_next_points()
+        Clock.schedule_interval(self.get_next_points, 3.0)
 
-    def stop(self):
+    def stop_plot(self):
         self.remove_all_plots()
-        Clock.unschedule(self.get_value)
+        Clock.unschedule(self.get_next_points)
 
-    def get_value(self, dt=None):
+    def get_next_points(self, dt=None):
         self._plot.points = self._next_points()
 
 
@@ -127,14 +127,14 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
         #.select_details()
 
 
-class PowerListItem(TwoLineAvatarIconListItem):
+class PowerListItem(TwoLineAvatarIconListItem, PowerPlot):
     """The engaged power supply item."""
 
     def select_details(self):
         ids = MDApp.get_running_app().root.ids
         ids.pd_main_label.text = self.text + f",  {T['co-output-current-l']}"
         ids.pd_mac_label.text = self.secondary_text
-        self.details__plot.select()
+        self.select_plot()
         Contero.select_tab(ids.ps_tab_details)
 
     def on_touch_down(self, touch):
@@ -160,8 +160,8 @@ class TabList(FloatLayout, MDTabsBase):
             item = PowerListItem(
                 text=T["co-ps-label-1"] + f" {i + 1:>2}", secondary_text=rand_mac()
             )
-            item.details__plot = PowerPlot()
-            item.details__plot.start()
+            #item.details__plot = PowerPlot()
+            item.start_plot()
             # Adding a button manually to the item
             # (and passing down the item handle).
             btn_to = RightSelectButton()
@@ -275,7 +275,7 @@ class Contero(MDApp):
         tab_list = self.root.ids.ps_tab_list
         for item in self.root.ids.ps_list.children:
             print(f"item: {item.text}")
-            item.details__plot.stop()
+            item.stop_plot()
         self.root.ids.ps_list.clear_widgets()
 
         Contero.select_tab(tab_list)
