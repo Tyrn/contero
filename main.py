@@ -73,27 +73,35 @@ def power_points():
     return next
 
 
-class PowerPlot(ObjectProperty):
+#class PowerPlot(ObjectProperty):
+#    """Intended as a ListItem property."""
+#    def __init__(self, **kwargs):
+#        super(PowerPlot, self).__init__(**kwargs)
+class PowerPlot():
     """Intended as a ListItem property."""
-    def __init__(self, **kwargs):
-        super(PowerPlot, self).__init__(**kwargs)
+    def __init__(self):
         self._plot = MeshStemPlot(color=[1, 0, 1, 0.5])
         self._next_points = power_points()
 
     def __del__(self):
-        super(PowerPlot, self).__del__()
-        print("trying to stop!")
-        self.stop()
+        print("PowerPlot.__del__")
 
-    def start(self):
+    def remove_all_plots(self):
         common_graph = MDApp.get_running_app().root.ids.graph_test
         for plot in common_graph.plots:
             common_graph.remove_plot(plot)
+
+    def select(self):
+        self.remove_all_plots()
+        common_graph = MDApp.get_running_app().root.ids.graph_test
         common_graph.add_plot(self._plot)
+
+    def start(self):
         self.get_value()
         Clock.schedule_interval(self.get_value, 3.0)
 
     def stop(self):
+        self.remove_all_plots()
         Clock.unschedule(self.get_value)
 
     def get_value(self, dt=None):
@@ -123,7 +131,7 @@ class PowerListItem(TwoLineAvatarIconListItem):
         ids = MDApp.get_running_app().root.ids
         ids.pd_main_label.text = self.text + f",  {T['co-output-current-l']}"
         ids.pd_mac_label.text = self.secondary_text
-        #self.details__plot.start()
+        self.details__plot.select()
         Contero.select_tab(ids.ps_tab_details)
 
     def on_touch_down(self, touch):
@@ -143,6 +151,8 @@ class TabList(FloatLayout, MDTabsBase):
     def discover(self, tab_details, cnt):
         ids = MDApp.get_running_app().root.ids
         ids.ps_toolbar.animate_action_button = False
+        ids.pd_main_label.text = T["co-no-ps-selected"]
+        ids.pd_mac_label.text = ""
         for i in range(cnt):
             item = PowerListItem(
                 text=T["co-ps-label-1"] + f" {i + 1:>2}", secondary_text=rand_mac()
@@ -260,6 +270,9 @@ class Contero(MDApp):
 
     def discovery_request(self, item_count=5, delay=3):
         tab_list = self.root.ids.ps_tab_list
+        for item in self.root.ids.ps_list.children:
+            print(f"item: {item.text}")
+            item.details__plot.stop()
         self.root.ids.ps_list.clear_widgets()
 
         Contero.select_tab(tab_list)
