@@ -11,6 +11,8 @@ from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
+#from kivy.weakproxy import WeakProxy
+import weakref
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivy.metrics import dp
@@ -121,7 +123,8 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
     """Custom right container."""
 
     def on_release(self):
-        self.power__list_item.select_details()
+        self.wm_select_details()()
+        #.select_details()
 
 
 class PowerListItem(TwoLineAvatarIconListItem):
@@ -162,7 +165,7 @@ class TabList(FloatLayout, MDTabsBase):
             # Adding a button manually to the item
             # (and passing down the item handle).
             btn_to = RightSelectButton()
-            btn_to.power__list_item = item
+            btn_to.wm_select_details = weakref.WeakMethod(item.select_details)
             item.add_widget(btn_to)
 
             item.ids.item_left.icon = "flash"
