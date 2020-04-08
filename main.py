@@ -11,7 +11,8 @@ from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
-#from kivy.weakproxy import WeakProxy
+
+# from kivy.weakproxy import WeakProxy
 import weakref
 from kivy.clock import Clock
 from kivymd.app import MDApp
@@ -75,18 +76,19 @@ def power_points():
     return next
 
 
-#class PowerPlot(ObjectProperty):
+# class PowerPlot(ObjectProperty):
 #    """Intended as a ListItem property."""
 #    def __init__(self, **kwargs):
 #        super(PowerPlot, self).__init__(**kwargs)
-class PowerPlot():
+class PowerPlot:
     """Intended as a ListItem property."""
+
     def __init__(self):
         self._plot = MeshStemPlot(color=[1, 0, 1, 0.5])
         self._next_points = power_points()
 
     def __del__(self):
-        print("PowerPlot.__del__")
+        print("*** *** PowerPlot.__del__ *** ***")
 
     def remove_all_plots(self):
         common_graph = MDApp.get_running_app().root.ids.graph_test
@@ -110,7 +112,6 @@ class PowerPlot():
         self._plot.points = self._next_points()
 
 
-
 class PowerGrid(GridLayout):
     """Layout containing a Graph."""
 
@@ -124,7 +125,7 @@ class RightSelectButton(IRightBodyTouch, MDIconButton):
 
     def on_release(self):
         self.wm_select_details()()
-        #.select_details()
+        # .select_details()
 
 
 class PowerListItem(TwoLineAvatarIconListItem, PowerPlot):
@@ -160,7 +161,7 @@ class TabList(FloatLayout, MDTabsBase):
             item = PowerListItem(
                 text=T["co-ps-label-1"] + f" {i + 1:>2}", secondary_text=rand_mac()
             )
-            #item.details__plot = PowerPlot()
+            # item.details__plot = PowerPlot()
             item.start_plot()
             # Adding a button manually to the item
             # (and passing down the item handle).
@@ -172,11 +173,20 @@ class TabList(FloatLayout, MDTabsBase):
             ids.ps_list.add_widget(item)
 
 
+def trace_inhouse_events():
+    events = Clock.get_events()
+    for i, event in enumerate(events):
+        sign = "get_next_points"
+        junk = f"{event}"
+        if junk.find(sign) >= 0:
+            print(f"({i}) my callback: {event}")
+
+
 class TabDetails(FloatLayout, MDTabsBase):
     """The engaged power supply details tab."""
 
     def surfacing(self, tab_text):
-        pass
+        trace_inhouse_events()
 
 
 class Contero(MDApp):

@@ -27,3 +27,13 @@ def int_to_mac(macint):
 def rand_mac():
     v = partial(random.getrandbits, 8)
     return f"{v():02x}:{v():02x}:{v():02x}:{v():02x}:{v():02x}:{v():02x}"
+
+
+class Destructible():
+    def __del__(self):
+        print("Destructible: __del__ called!")
+
+
+def call_destructible():
+    d = Destructible()
+    print("Body")
