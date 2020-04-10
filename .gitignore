@@ -2,6 +2,8 @@
 /.buildozer/
 __pycache__/
 co_*.json
+*.dat
+*_.png
 .idea
 *.geany
 *.vim

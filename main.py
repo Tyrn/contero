@@ -33,6 +33,7 @@ from co_lang import T
 from math import sin
 from kivy_garden.graph import Graph, MeshStemPlot
 from co_utils import rand_mac
+import gc
 
 
 ACTION_ICON = "eye"
@@ -281,21 +282,24 @@ class Contero(MDApp):
         self.menu_lang_append()
         # Clock.schedule_once(lambda dt: self.discovery_request(30, 5), 5)
 
-    def discovery_request(self, item_count=5, delay=3):
-        tab_list = self.root.ids.ps_tab_list
+    def discovery_clean(self):
         for item in self.root.ids.ps_list.children:
             print(f"item: {item.text}")
             item.stop_plot()
         self.root.ids.ps_list.clear_widgets()
+        gc.collect()
 
+    def discovery_request(self, item_count=50, delay=3):
+        self.discovery_clean()
+
+        tab_list = self.root.ids.ps_tab_list
         Contero.select_tab(tab_list)
-
-        tab_details = self.root.ids.ps_tab_details
 
         self.root.ids.ps_toolbar.animate_action_button = True
         self.animate_await()
         Clock.schedule_interval(lambda dt: self.animate_await(), 1.0)
 
+        tab_details = self.root.ids.ps_tab_details
         Clock.schedule_once(
             lambda dt: tab_list.discover(tab_details, item_count), delay
         )

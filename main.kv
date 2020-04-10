@@ -86,7 +86,7 @@ BoxLayout:
             animate_action_button: False
             next_icon: app.pulse_icon_counter() # Not a callback.
             on_action_button: app.discovery_request()
-            right_action_items: [ ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
+            right_action_items: [ ['minus-box-outline', lambda x: app.discovery_clean()], ['earth-box', lambda x: app.menu_lang.open(x)], ['dots-vertical', lambda x: app.menu_main.open(x)], ]
 
 
 <ColoredLabel@MDLabel>:
