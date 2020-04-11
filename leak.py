@@ -52,12 +52,11 @@ class Contero(MDApp):
         self.root.ids.ps_list.clear_widgets()
         gc.collect()
 
-    def discovery_request(self, item_count=50, delay=3):
+    def discovery_request(self, item_count=50):
         self.discovery_clean()
 
         tab_list = self.root.ids.ps_tab_list
 
-        self.root.ids.ps_toolbar.animate_action_button = True
         tab_list.discover(item_count)
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
