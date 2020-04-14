@@ -1,35 +1,38 @@
 #:kivy 1.11.1
-#:import ACTION_ICON __main__.ACTION_ICON
+#:import Window kivy.core.window.Window
 BoxLayout:
     orientation: "vertical"
-    MDTabs:
-        id: ps_tabs
-        on_tab_switch: app.on_tab_switch(*args)
-        TabList:
-            id: ps_tab_list
-            text: "flash"
-            ScrollView:
-                bar_margin: 5
-                bar_width: 15
-                bar_color: .0, .8, .0, 1
-                bar_inactive_color: .5, .5, .5, 1
-                effect_cls: "ScrollEffect"
-                scroll_type: ["bars", "content"]
-                scroll_distance: 5
-                scroll_timeout: 50
-                MDList:
-                    id: ps_list
-    MDBottomAppBar:
-        MDToolbar:
-            id: ps_toolbar
-            title: "Destroy a list"
-            icon: ACTION_ICON
-            type: "bottom"
-            on_action_button: app.discovery_request()
-            right_action_items: [ ['minus-box-outline', lambda x: app.discovery_clean()], ]
+    ScrollView:
+        bar_margin: 5
+        bar_width: 15
+        bar_color: .0, .8, .0, 1
+        bar_inactive_color: .5, .5, .5, 1
+        effect_cls: "ScrollEffect"
+        scroll_type: ["bars", "content"]
+        scroll_distance: 5
+        scroll_timeout: 50
+        GridLayout:
+            id: ps_list
+            padding: dp(4)
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height
+    BoxLayout:
+        size_hint: [1, 0.2]
+        orientation: "horizontal"
+        Button:
+            text: "Populate"
+            bold: True
+            on_press: app.discovery_request()
+        Button:
+            text: "Clean"
+            bold: True
+            on_press: app.discovery_clean()
 
 
 <PowerListItem>:
-    IconLeftWidget:
-        id: item_left
-        icon: "earth"
+    bold: True
+    size_hint: None, None
+    width: Window.width
+    height: 90
+
