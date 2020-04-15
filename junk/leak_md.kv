@@ -1,5 +1,5 @@
 #:kivy 1.11.1
-#:import ACTION_ICON __main__.ACTION_ICON
+# #:import ACTION_ICON __main__.ACTION_ICON
 BoxLayout:
     orientation: "vertical"
     MDTabs:
@@ -23,7 +23,7 @@ BoxLayout:
         MDToolbar:
             id: ps_toolbar
             title: "Destroy a list"
-            icon: ACTION_ICON
+            icon: "eye"
             type: "bottom"
             on_action_button: app.discovery_request()
             right_action_items: [ ['minus-box-outline', lambda x: app.discovery_clean()], ]

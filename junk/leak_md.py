@@ -13,9 +13,10 @@ from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import TwoLineAvatarIconListItem
 import gc
+from memory_profiler import profile
 
 
-ACTION_ICON = "eye"
+#ACTION_ICON = "eye"
 
 
 class PowerListItem(TwoLineAvatarIconListItem):
@@ -45,9 +46,11 @@ class Contero(MDApp):
     def on_start(self):
         self.theme_cls.primary_palette = "Gray"
 
+    @profile
     def discovery_clean(self):
         for item in self.root.ids.ps_list.children:
-            print(f"item: {item.text}")
+            pass
+            #print(f"item: {item.text}")
         self.root.ids.ps_list.clear_widgets()
         gc.collect()
 

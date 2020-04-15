@@ -1,3 +1,4 @@
+import sys
 from functools import partial
 import kivy
 
@@ -8,9 +9,14 @@ print(f"platform: {platform}")
 
 from kivy.lang import Builder
 
-from kivy.app import App
+if len(sys.argv) > 1:
+    from kivy.app import App
+else:
+    from kivymd.app import MDApp as App
+
 from kivy.uix.button import Button
 import gc
+from memory_profiler import profile
 
 
 class PowerListItem(Button):
@@ -33,9 +39,11 @@ class Contero(App):
             )
             ids.ps_list.add_widget(item)
 
+    @profile
     def discovery_clean(self):
         for item in self.root.ids.ps_list.children:
-            print(f"item: {item.text}")
+            pass
+            #print(f"item: {item.text}")
         self.root.ids.ps_list.clear_widgets()
         gc.collect()
 
