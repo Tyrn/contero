@@ -12,7 +12,6 @@ from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 
-# from kivy.weakproxy import WeakProxy
 import weakref
 from kivy.clock import Clock
 from kivymd.app import MDApp
@@ -177,9 +176,12 @@ class TabList(FloatLayout, MDTabsBase):
 def trace_inhouse_events():
     events = Clock.get_events()
     for i, event in enumerate(events):
-        sign = "get_next_points"
         junk = f"{event}"
-        if junk.find(sign) >= 0:
+        if (
+            junk.find("get_next_points") >= 0
+            or junk.find("animate_await") >= 0
+            or junk.find("discover") >= 0
+        ):
             print(f"({i}) my callback: {event}")
 
 
@@ -289,7 +291,7 @@ class Contero(MDApp):
         self.root.ids.ps_list.clear_widgets()
         gc.collect()
 
-    def discovery_request(self, item_count=50, delay=3):
+    def discovery_request(self, item_count=5, delay=3):
         self.discovery_clean()
 
         tab_list = self.root.ids.ps_tab_list

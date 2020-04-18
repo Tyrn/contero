@@ -24,7 +24,6 @@ class PowerListItem(Button):
 
 
 class Contero(App):
-
     def build(self):
         return Builder.load_file("leak.kv")
 
@@ -34,16 +33,14 @@ class Contero(App):
     def discover(self, cnt):
         ids = App.get_running_app().root.ids
         for i in range(cnt):
-            item = PowerListItem(
-                text="List Item" + f" {i + 1:>2}"
-            )
+            item = PowerListItem(text="List Item" + f" {i + 1:>2}")
             ids.ps_list.add_widget(item)
 
     @profile
     def discovery_clean(self):
         for item in self.root.ids.ps_list.children:
             pass
-            #print(f"item: {item.text}")
+            # print(f"item: {item.text}")
         self.root.ids.ps_list.clear_widgets()
         gc.collect()
 
@@ -54,4 +51,3 @@ class Contero(App):
 
 if __name__ == "__main__":
     Contero().run()
-

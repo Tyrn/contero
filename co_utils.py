@@ -29,7 +29,7 @@ def rand_mac():
     return f"{v():02x}:{v():02x}:{v():02x}:{v():02x}:{v():02x}:{v():02x}"
 
 
-class Destructible():
+class Destructible:
     def __del__(self):
         print("Destructible: __del__ called!")
 

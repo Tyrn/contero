@@ -16,7 +16,7 @@ import gc
 from memory_profiler import profile
 
 
-#ACTION_ICON = "eye"
+# ACTION_ICON = "eye"
 
 
 class PowerListItem(TwoLineAvatarIconListItem):
@@ -39,7 +39,6 @@ class TabList(FloatLayout, MDTabsBase):
 
 
 class Contero(MDApp):
-
     def build(self):
         return Builder.load_file("leak_md.kv")
 
@@ -50,7 +49,7 @@ class Contero(MDApp):
     def discovery_clean(self):
         for item in self.root.ids.ps_list.children:
             pass
-            #print(f"item: {item.text}")
+            # print(f"item: {item.text}")
         self.root.ids.ps_list.clear_widgets()
         gc.collect()
 
