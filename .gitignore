@@ -1,11 +1,25 @@
+# Buildozer
 /bin/
 /.buildozer/
 /.gradle/
-__pycache__/
 co_*.json
 *.dat
 *_.png
-.idea
-*.geany
+
+# Poetry
+/dist/
+/.venv/
+__pycache__/
+__pypackages__/
+*.egg-info/
+poetry.lock
+.coverage
+
+# IDE
 *.vim
+.nvimlog
+*.geany
+.idea
+*.sublime-project
+*.sublime-workspace
 
