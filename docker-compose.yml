@@ -1,0 +1,14 @@
+services:
+  buildozer:
+    image: buildozer:latest
+    volumes:
+      - type: bind
+        source: .
+        target: /home/user/hostcwd
+      - type: bind
+        source: ./.buildozer
+        target: /home/user/.buildozer
+      - type: bind
+        source: ./.gradle
+        target: /home/user/.gradle
+

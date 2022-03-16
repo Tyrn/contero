@@ -1,5 +1,6 @@
 /bin/
 /.buildozer/
+/.gradle/
 __pycache__/
 co_*.json
 *.dat

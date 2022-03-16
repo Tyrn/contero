@@ -7,7 +7,7 @@ title = Contero
 package.name = contero
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = org.alvin
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -88,10 +88,10 @@ fullscreen = 0
 #android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 27
+android.api = 27
 
 # (int) Minimum API your APK will support.
-android.minapi = 21
+android.minapi = 27
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -100,7 +100,7 @@ android.minapi = 21
 #android.ndk = 17c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-android.ndk_api = 21
+android.ndk_api = 27
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 #android.private_storage = True
@@ -219,7 +219,7 @@ android.accept_sdk_license = True
 #android.copy_libs = 1
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.arch = armeabi-v7a
+android.archs = armeabi-v7a
 
 #
 # Python for android (p4a) specific
@@ -230,6 +230,7 @@ android.arch = armeabi-v7a
 
 # (str) python-for-android branch to use, defaults to master
 #p4a.branch = master
+p4a.branch = develop
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
 #p4a.source_dir =
