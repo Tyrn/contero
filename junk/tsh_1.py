@@ -45,7 +45,13 @@ class TestApp(App):
     current_selection = ListProperty([])
 
     def build(self):
-        self.data = [dict(text="key {}".format(i), rv_key=i,) for i in range(100)]
+        self.data = [
+            dict(
+                text="key {}".format(i),
+                rv_key=i,
+            )
+            for i in range(100)
+        ]
         return Builder.load_string(KV)
 
     def select_row(self, rv_key, active):

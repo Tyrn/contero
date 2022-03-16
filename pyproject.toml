@@ -36,6 +36,9 @@ exclude = '''
     | buck-out
     | build
     | dist
+    | bin
+    | \.buildozer
+    | \.gradle
   )/
 )
 '''

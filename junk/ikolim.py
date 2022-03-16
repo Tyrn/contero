@@ -18,19 +18,19 @@ class MessageBox(Popup):
 class SelectableRecycleBoxLayout(
     FocusBehavior, LayoutSelectionBehavior, RecycleBoxLayout
 ):
-    """ Adds selection and focus behaviour to the view. """
+    """Adds selection and focus behaviour to the view."""
 
     selected_value = StringProperty("")
     btn_info = ListProperty(["Button 0 Text", "Button 1 Text", "Button 2 Text"])
 
 
 class SelectableButton(RecycleDataViewBehavior, Button):
-    """ Add selection support to the Label """
+    """Add selection support to the Label"""
 
     index = None
 
     def refresh_view_attrs(self, rv, index, data):
-        """ Catch and handle the view changes """
+        """Catch and handle the view changes"""
         self.index = index
         return super(SelectableButton, self).refresh_view_attrs(rv, index, data)
 
