@@ -25,6 +25,7 @@ from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
 from kivymd.uix.list import TwoLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
+from kivymd.uix.button import MDFlatButton
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
 import co_lang
@@ -195,28 +196,37 @@ class TabDetails(FloatLayout, MDTabsBase):
 class Contero(MDApp):
     menu_main = ObjectProperty()
 
-    def menu_main_callback(self, button):
+    def menu_main_open(self, button):
         self.menu_main.caller = button
         self.menu_main.open()
 
-    def menu_main_about_callback(self, text):
-        self.menu_main.dismiss()
-        if text == T["co-about"]:
-            dialog = MDDialog(
-                title=T["co-app-name"],
-                size_hint=(0.8, 0.3),
-                # text_button_ok=T["co-close"],
-                text=T["co-app-running-on"] + f" {platform}",
-            )
-            dialog.open()
+    about_dialog = ObjectProperty()
 
-    def menu_main_append(self):
+    def about_dialog_close(self, *args):
+        self.about_dialog.dismiss(force=True)
+
+    def menu_item_about_callback(self, text):
+        self.menu_main.dismiss()
+        self.about_dialog = MDDialog(
+            title=T["co-app-name"],
+            size_hint=(0.8, 0.3),
+            text=T["co-app-running-on"] + f" {platform}",
+            buttons=[
+                MDFlatButton(
+                    text=T["co-close-button"],
+                    on_release=self.about_dialog_close,
+                ),
+            ],
+        )
+        self.about_dialog.open()
+
+    def menu_main_build(self):
         items = [
             {
                 "viewclass": "OneLineListItem",
                 "text": T["co-about"],
                 "height": dp(48),
-                "on_release": lambda x=T["co-about"]: self.menu_main_about_callback(x),
+                "on_release": lambda x=T["co-about"]: self.menu_item_about_callback(x),
             }
         ]
         self.menu_main = MDDropdownMenu(
@@ -227,11 +237,11 @@ class Contero(MDApp):
 
     menu_lang = ObjectProperty()
 
-    def menu_locale_callback(self, button):
+    def menu_locale_open(self, button):
         self.menu_lang.caller = button
         self.menu_lang.open()
 
-    def menu_lang_callback(self, lng):
+    def menu_item_lang_callback(self, lng):
         global T
 
         self.menu_lang.dismiss()
@@ -239,7 +249,7 @@ class Contero(MDApp):
         store = JsonStore("co_T.json")
         store.put("co-lang", name=lng)
 
-    def menu_lang_append(self):
+    def menu_locale_build(self):
         items = []
         for lng in co_lang.LANG:
             items.append(
@@ -247,7 +257,7 @@ class Contero(MDApp):
                     "viewclass": "OneLineListItem",
                     "text": lng,
                     "height": dp(48),
-                    "on_release": lambda x=lng: self.menu_lang_callback(x),
+                    "on_release": lambda x=lng: self.menu_item_lang_callback(x),
                 }
             )
         self.menu_lang = MDDropdownMenu(
@@ -303,8 +313,8 @@ class Contero(MDApp):
         # self.theme_cls.primary_hue = '900'
 
         def on_start(interval):
-            self.menu_main_append()
-            self.menu_lang_append()
+            self.menu_main_build()
+            self.menu_locale_build()
 
         Clock.schedule_once(on_start)
         # Clock.schedule_once(lambda dt: self.discovery_request(30, 5), 5)
