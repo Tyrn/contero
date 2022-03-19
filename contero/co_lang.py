@@ -18,6 +18,8 @@ _EN = {
     "co-app-name": "Contero",
     "co-app-running-on": "Running on",
     "co-output-current-l": "output current",
+    "co-supplies": "List",
+    "co-supply-details": "Details",
 }
 
 
@@ -34,6 +36,8 @@ _RU = {
     "co-app-name": "Contero",
     "co-app-running-on": "Выполняется на",
     "co-output-current-l": "ток в нагрузке",
+    "co-supplies": "Список",
+    "co-supply-details": "Детали",
 }
 
 
