@@ -1,7 +1,7 @@
 # Buildozer
 /bin/
-/.buildozer/
-/.gradle/
+#/.buildozer/
+#/.gradle/
 co_*.json
 *.dat
 *_.png
