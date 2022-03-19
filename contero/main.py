@@ -209,7 +209,7 @@ class Contero(MDApp):
         self.menu_main = MDDropdownMenu(width_mult=3)
         self.menu_main.items.append(
             {
-                "viewclass": "MDMenuItem",
+                "viewclass": "OneLineListItem",
                 "text": T["co-about"],
                 "callback": self.menu_main_callback,
             }
@@ -228,7 +228,7 @@ class Contero(MDApp):
         for lng in co_lang.LANG:
             self.menu_lang.items.append(
                 {
-                    "viewclass": "MDMenuItem",
+                    "viewclass": "OneLineListItem",
                     "text": lng,
                     "callback": self.menu_lang_callback,
                 }
