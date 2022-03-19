@@ -274,7 +274,9 @@ class Contero(MDApp):
             "on_tab_switch",
             destination_tab,
             destination_tab.tab_label,
-            md_icons["flash" if destination_tab.text == T["co-supplies"] else "equalizer"],
+            md_icons[
+                "flash" if destination_tab.text == T["co-supplies"] else "equalizer"
+            ],
         )
         tabs.tab_bar.parent.carousel.load_slide(destination_tab)
 

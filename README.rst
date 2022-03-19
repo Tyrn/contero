@@ -1,4 +1,4 @@
 Contero
 *******
 
-Power supply manager
+Power supply manager (a stub, so far)
