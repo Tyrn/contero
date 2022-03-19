@@ -195,44 +195,66 @@ class TabDetails(FloatLayout, MDTabsBase):
 class Contero(MDApp):
     menu_main = ObjectProperty()
 
-    def menu_main_callback(self, text):
+    def menu_main_callback(self, button):
+        self.menu_main.caller = button
+        self.menu_main.open()
+
+    def menu_main_about_callback(self, text):
+        self.menu_main.dismiss()
         if text == T["co-about"]:
             dialog = MDDialog(
                 title=T["co-app-name"],
                 size_hint=(0.8, 0.3),
-                text_button_ok=T["co-close"],
+                # text_button_ok=T["co-close"],
                 text=T["co-app-running-on"] + f" {platform}",
             )
             dialog.open()
 
     def menu_main_append(self):
-        self.menu_main = MDDropdownMenu(width_mult=3)
-        self.menu_main.items.append(
+        items = [
             {
                 "viewclass": "OneLineListItem",
                 "text": T["co-about"],
-                "callback": self.menu_main_callback,
+                "height": dp(48),
+                "on_release": lambda x=T["co-about"]: self.menu_main_about_callback(x),
             }
+        ]
+        self.menu_main = MDDropdownMenu(
+            width_mult=3,
+            items=items,
+            caller=self.root.ids.ps_toolbar.ids.right_actions.children[2],
         )
 
     menu_lang = ObjectProperty()
 
+    def menu_locale_callback(self, button):
+        self.menu_lang.caller = button
+        self.menu_lang.open()
+
     def menu_lang_callback(self, lng):
         global T
+
+        self.menu_lang.dismiss()
         T = co_lang.LANG[lng]
         store = JsonStore("co_T.json")
         store.put("co-lang", name=lng)
 
     def menu_lang_append(self):
-        self.menu_lang = MDDropdownMenu(width_mult=2)
+        items = []
         for lng in co_lang.LANG:
-            self.menu_lang.items.append(
+            items.append(
                 {
                     "viewclass": "OneLineListItem",
                     "text": lng,
-                    "callback": self.menu_lang_callback,
+                    "height": dp(48),
+                    "on_release": lambda x=lng: self.menu_lang_callback(x),
                 }
             )
+        self.menu_lang = MDDropdownMenu(
+            width_mult=2,
+            items=items,
+            caller=self.root.ids.ps_toolbar.ids.right_actions.children[1],
+        )
 
     @staticmethod
     def select_tab(destination_tab):
@@ -280,8 +302,11 @@ class Contero(MDApp):
         self.theme_cls.primary_palette = "Gray"
         # self.theme_cls.primary_hue = '900'
 
-        self.menu_main_append()
-        self.menu_lang_append()
+        def on_start(interval):
+            self.menu_main_append()
+            self.menu_lang_append()
+
+        Clock.schedule_once(on_start)
         # Clock.schedule_once(lambda dt: self.discovery_request(30, 5), 5)
 
     def discovery_clean(self):
