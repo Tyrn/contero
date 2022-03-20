@@ -10,6 +10,15 @@ Development
 - `KivyMD <https://github.com/kivymd/KivyMD>`__; MDDropdownMenu `1 <https://github.com/kivymd/KivyMD/issues/1203>`__, `2 <https://stackoverflow.com/questions/71510107/kivymd-update-mddropdownmenu-open-generates-an-error>`__
 - `Kivy Garden <https://github.com/kivy-garden>`__
 
+Use Git Hooks
+-------------
+
+::
+
+    $ pre-commit install
+    ...
+    $ pre-commit run --all-files
+
 Poetry (Desktop)
 ----------------
 
@@ -27,3 +36,4 @@ Buildozer (Mobile)
 ::
 
     $ docker-compose run buildozer android [debug | release]
+    $ adb install -r bin/*.apk
