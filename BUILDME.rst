@@ -15,9 +15,9 @@ Use Git Hooks
 
 ::
 
-    $ pre-commit install
+    (.venv) $ pre-commit install
     ...
-    $ pre-commit run --all-files
+    (.venv) $ pre-commit run --all-files
 
 Poetry (Desktop)
 ----------------
