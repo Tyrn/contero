@@ -26,6 +26,7 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
 import co_lang
+from co_lang import T
 from math import sin
 from kivy_garden.graph import MeshStemPlot
 from co_utils import rand_mac
@@ -130,7 +131,7 @@ class PowerListItem(TwoLineAvatarIconListItem, PowerPlot):
 
     def select_details(self):
         ids = MDApp.get_running_app().root.ids
-        ids.pd_main_label.text = self.text + f",  {T['co-output-current-l']}"
+        ids.pd_main_label.text = self.text + f",  {T('co-output-current-l')}"
         ids.pd_mac_label.text = self.secondary_text
         self.select_plot()
         Contero.select_tab(ids.ps_tab_details)
@@ -152,11 +153,11 @@ class TabList(FloatLayout, MDTabsBase):
     def discover(self, tab_details, cnt):
         ids = MDApp.get_running_app().root.ids
         ids.ps_toolbar.animate_action_button = False
-        ids.pd_main_label.text = T["co-no-ps-selected"]
+        ids.pd_main_label.text = T("co-no-ps-selected")
         ids.pd_mac_label.text = ""
         for i in range(cnt):
             item = PowerListItem(
-                text=T["co-ps-label-1"] + f" {i + 1:>2}", secondary_text=rand_mac()
+                text=T("co-ps-label-1") + f" {i + 1:>2}", secondary_text=rand_mac()
             )
             # item.details__plot = PowerPlot()
             item.start_plot()
@@ -204,12 +205,12 @@ class Contero(MDApp):
     def menu_item_about_callback(self, text):
         self.menu_main.dismiss()
         self.about_dialog = MDDialog(
-            title=T["co-app-name"],
+            title=T("co-app-name"),
             size_hint=(0.8, 0.3),
-            text=T["co-app-running-on"] + f" {platform}",
+            text=T("co-app-running-on") + f" {platform}",
             buttons=[
                 MDFlatButton(
-                    text=T["co-close-button"],
+                    text=T("co-close-button"),
                     on_release=self.about_dialog_close,
                 ),
             ],
@@ -220,9 +221,9 @@ class Contero(MDApp):
         items = [
             {
                 "viewclass": "OneLineListItem",
-                "text": T["co-about"],
+                "text": T("co-about"),
                 "height": dp(48),
-                "on_release": lambda x=T["co-about"]: self.menu_item_about_callback(x),
+                "on_release": lambda x=T("co-about"): self.menu_item_about_callback(x),
             }
         ]
         self.menu_main = MDDropdownMenu(
@@ -238,16 +239,14 @@ class Contero(MDApp):
         self.menu_lang.open()
 
     def menu_item_lang_callback(self, lng):
-        global T
-
         self.menu_lang.dismiss()
-        T = co_lang.LANG[lng]
+        co_lang.set_language(lng)
         store = JsonStore("co_T.json")
         store.put("co-lang", name=lng)
 
     def menu_locale_build(self):
         items = []
-        for lng in co_lang.LANG:
+        for lng in co_lang.languages():
             items.append(
                 {
                     "viewclass": "OneLineListItem",
@@ -271,7 +270,7 @@ class Contero(MDApp):
             destination_tab,
             destination_tab.tab_label,
             md_icons[
-                "flash" if destination_tab.text == T["co-supplies"] else "equalizer"
+                "flash" if destination_tab.text == T("co-supplies") else "equalizer"
             ],
         )
         tabs.tab_bar.parent.carousel.load_slide(destination_tab)
@@ -297,12 +296,11 @@ class Contero(MDApp):
         return False
 
     def build(self):
-        global T
-        T = co_lang.LANG["EN"]
+        co_lang.set_language("EN")
         store = JsonStore("co_T.json")
         if store.exists("co-lang"):
             lng = store.get("co-lang")["name"]
-            T = co_lang.LANG[lng]
+            co_lang.set_language(lng)
 
         return Builder.load_file("main.kv")
 

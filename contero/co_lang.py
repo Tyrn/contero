@@ -38,7 +38,23 @@ _RU = {
 }
 
 
-LANG = {
+_T = _EN
+
+
+_LANG = {
     "EN": _EN,
     "RU": _RU,
 }
+
+
+def T(key):
+    return _T[key]
+
+
+def languages():
+    return _LANG
+
+
+def set_language(lng):
+    global _T
+    _T = _LANG[lng]

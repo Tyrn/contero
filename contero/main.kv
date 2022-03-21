@@ -1,5 +1,5 @@
 #:kivy 2.1.0
-#:import T __main__.T
+#:import T co_lang.T
 #:import ACTION_ICON __main__.ACTION_ICON
 #:import XMAX __main__.XMAX
 BoxLayout:
@@ -9,7 +9,7 @@ BoxLayout:
         on_tab_switch: app.on_tab_switch(*args)
         TabList:
             id: ps_tab_list
-            text: T["co-supplies"]
+            text: T("co-supplies")
             ScrollView:
                 bar_margin: 5
                 bar_width: 15
@@ -23,7 +23,7 @@ BoxLayout:
                     id: ps_list
         TabDetails:
             id: ps_tab_details
-            text: T["co-supply-details"]
+            text: T("co-supply-details")
             ScrollView:
                 bar_margin: 5
                 bar_width: 15
@@ -61,7 +61,7 @@ BoxLayout:
                             ymax: 1
                     ColoredLabel:
                         id: pd_main_label
-                        text: T["co-no-ps-selected"]
+                        text: T("co-no-ps-selected")
                         size_hint: 1, None
                         size: self.texture_size
                         #padding: dp(24), dp(12)
@@ -80,7 +80,7 @@ BoxLayout:
     MDBottomAppBar:
         MDToolbar:
             id: ps_toolbar
-            title: T["co-toolbar-title"]
+            title: T("co-toolbar-title")
             icon: ACTION_ICON
             type: "bottom"
             animate_action_button: False
