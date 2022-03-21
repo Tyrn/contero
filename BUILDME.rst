@@ -33,9 +33,9 @@ Check memory usage
 
 ::
 
-    $ mprof run -C python contero/main.py
+    (.venv) $ mprof run -C python contero/main.py
     ...
-    $ mprof plot -o profile.png
+    (.venv) $ mprof plot -o profile.png
 
 Buildozer (Mobile)
 ------------------
