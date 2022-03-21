@@ -1,10 +1,10 @@
-from functools import partial
+"""
+Power supply manager for Linux and Android.
+"""
 import kivy
 
 kivy.require("2.1.0")
 from kivy.utils import platform
-
-print(f"platform: {platform}")
 
 from kivy.storage.jsonstore import JsonStore
 from kivy.lang import Builder
@@ -16,22 +16,18 @@ import weakref
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivy.metrics import dp
-from kivy.uix.widget import Widget
 from kivymd.uix.dialog import MDDialog
-from kivy.uix.label import Label
-from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.tab import MDTabsBase
-from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch
 from kivymd.uix.list import TwoLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.button import MDIconButton
 from kivymd.icon_definitions import md_icons
 import co_lang
-from co_lang import T
 from math import sin
-from kivy_garden.graph import Graph, MeshStemPlot
+from kivy_garden.graph import MeshStemPlot
 from co_utils import rand_mac
 import gc
 
@@ -183,7 +179,7 @@ def trace_inhouse_events():
             or junk.find("animate_await") >= 0
             or junk.find("discover") >= 0
         ):
-            print(f"({i}) my callback: {event}")
+            print(f"({i}) Event (on_tab_switch): {event}")
 
 
 class TabDetails(FloatLayout, MDTabsBase):
@@ -352,9 +348,6 @@ class Contero(MDApp):
         :param tab_text: text or name icon of tab;
         """
 
-        print(f"\ninstance_tab: {instance_tab}")
-        print(f"instance_tab_label: {instance_tab_label}")
-        print(f"tab_text: {tab_text}")
         instance_tab.surfacing(tab_text)
 
 
