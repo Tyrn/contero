@@ -28,6 +28,15 @@ Poetry (Desktop)
     $ poetry shell
     (.venv) $ python contero/main.py
 
+Check memory usage
+^^^^^^^^^^^^^^^^^^
+
+::
+
+    $ mprof run -C python contero/main.py
+    ...
+    $ mprof plot -o profile.png
+
 Buildozer (Mobile)
 ------------------
 
