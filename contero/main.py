@@ -269,7 +269,7 @@ class Contero(MDApp):
             "on_tab_switch",
             destination_tab,
             destination_tab.tab_label,
-            destination_tab.text,
+            "Tab Text",
         )
         tabs.tab_bar.parent.carousel.load_slide(destination_tab)
 
