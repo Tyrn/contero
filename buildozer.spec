@@ -68,7 +68,7 @@ orientation = all
 osx.python_version = 3
 
 # Kivy version to use
-osx.kivy_version = 1.9.1
+osx.kivy_version = 2.1.0
 
 #
 # Android specific
@@ -88,10 +88,10 @@ fullscreen = 0
 #android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
-android.api = 27
+android.api = 33
 
 # (int) Minimum API your APK will support.
-android.minapi = 27
+android.minapi = 33
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -100,7 +100,7 @@ android.minapi = 27
 #android.ndk = 17c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-android.ndk_api = 27
+android.ndk_api = 33
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 #android.private_storage = True
