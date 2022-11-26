@@ -46,3 +46,5 @@ Buildozer (Mobile)
 
     $ docker-compose run buildozer android [debug | release]
     $ adb install -r bin/*.apk
+
+*NB*, 2022-11-26: The above works for ``debug`` only. ``release`` requires explicit signing.
