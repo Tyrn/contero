@@ -318,6 +318,8 @@ class Contero(MDApp):
             print(f"item: {item.text}")
             item.stop_plot()
         self.root.ids.ps_list.clear_widgets()
+        self.root.ids.pd_main_label.text = T("co-no-ps-selected")
+        self.root.ids.pd_mac_label.text = ""
         gc.collect()
 
     def discovery_request(self, item_count=5, delay=3):
