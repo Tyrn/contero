@@ -305,6 +305,8 @@ class Contero(MDApp):
     def on_start(self):
         self.theme_cls.primary_palette = "Gray"
         # self.theme_cls.primary_hue = '900'
+        if platform != "android":
+            self.root.ids.ps_tabs.lock_swiping = True
 
         def on_start(interval):
             self.menu_main_build()
@@ -322,7 +324,7 @@ class Contero(MDApp):
         self.root.ids.pd_mac_label.text = ""
         gc.collect()
 
-    def discovery_request(self, item_count=5, delay=3):
+    def discovery_request(self, item_count=9, delay=3):
         self.discovery_clean()
 
         tab_list = self.root.ids.ps_tab_list
