@@ -12,14 +12,6 @@ BoxLayout:
             icon: "flash"
             text: T("co-supplies")
             ScrollView:
-                bar_margin: 5
-                bar_width: 15
-                bar_color: .0, .8, .0, 1
-                bar_inactive_color: .5, .5, .5, 1
-                effect_cls: "ScrollEffect"
-                scroll_type: ["bars", "content"]
-                scroll_distance: 5
-                scroll_timeout: 50
                 MDList:
                     id: ps_list
         TabDetails:
@@ -27,14 +19,6 @@ BoxLayout:
             icon: "equalizer"
             text: T("co-supply-details")
             ScrollView:
-                bar_margin: 5
-                bar_width: 15
-                bar_color: .0, .8, .0, 1
-                bar_inactive_color: .5, .5, .5, 1
-                effect_cls: "ScrollEffect"
-                scroll_type: ["bars", "content"]
-                scroll_distance: 5
-                scroll_timeout: 50
                 GridLayout:
                     padding: dp(4)
                     cols: 1
@@ -89,6 +73,17 @@ BoxLayout:
             next_icon: app.pulse_icon_counter() # Not a callback.
             on_action_button: app.discovery_request()
             right_action_items: [ ['minus-box-outline', lambda x: app.discovery_clean()], ['earth-box', lambda x: app.menu_locale_open(x)], ['dots-vertical', lambda x: app.menu_main_open(x)], ]
+
+
+<ScrollView>
+    bar_margin: 5
+    bar_width: 15
+    bar_color: .0, .8, .0, 1
+    bar_inactive_color: .5, .5, .5, 1
+    effect_cls: "ScrollEffect"
+    scroll_type: ["bars", "content"]
+    scroll_distance: 5
+    scroll_timeout: 50
 
 
 <ColoredLabel@MDLabel>:
