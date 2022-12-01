@@ -11,14 +11,14 @@ BoxLayout:
             id: ps_tab_list
             icon: "flash"
             text: T("co-supplies")
-            ScrollView:
+            MDScrollView:
                 MDList:
                     id: ps_list
         TabDetails:
             id: ps_tab_details
             icon: "equalizer"
             text: T("co-supply-details")
-            ScrollView:
+            MDScrollView:
                 GridLayout:
                     padding: dp(4)
                     cols: 1
@@ -75,7 +75,7 @@ BoxLayout:
             right_action_items: [ ['minus-box-outline', lambda x: app.discovery_clean()], ['earth-box', lambda x: app.menu_locale_open(x)], ['dots-vertical', lambda x: app.menu_main_open(x)], ]
 
 
-<ScrollView>
+<MDScrollView>
     bar_margin: 5
     bar_width: 15
     bar_color: .0, .8, .0, 1
