@@ -7,7 +7,8 @@ authors = ["Tyrn <orlov@bos-ltd.ru>"]
 [tool.poetry.dependencies]
 python = "^3.11"
 Kivy = "2.2.1"
-kivymd = { git = "https://github.com/kivymd/KivyMD.git" }
+# kivymd = { git = "https://github.com/kivymd/KivyMD.git" }
+kivymd = "1.1.1"
 "kivy-garden.graph" = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
