@@ -18,7 +18,7 @@ poetry.lock
 # IDE
 *.vim
 .nvimlog
-.projectile
+# .projectile
 *.geany
 .idea
 *.sublime-project
