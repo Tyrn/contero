@@ -3,35 +3,31 @@ Power supply manager for Linux and Android.
 """
 import kivy
 
-kivy.require("2.1.0")
-from kivy.utils import platform
-
-from kivy.storage.jsonstore import JsonStore
-from kivy.lang import Builder
-from kivy.properties import ObjectProperty
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.gridlayout import GridLayout
-
+kivy.require("2.2.1")
+import gc
 import weakref
-from kivy.clock import Clock
-from kivymd.app import MDApp
-from kivy.metrics import dp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.tab import MDTabsBase
-from kivymd.uix.list import IRightBodyTouch
-from kivymd.uix.list import TwoLineAvatarIconListItem
-from kivymd.uix.selectioncontrol import MDCheckbox
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.button import MDIconButton
-from kivymd.icon_definitions import md_icons
+from math import sin
+
 import co_lang
 from co_lang import T
-from math import sin
-from kivy_garden.graph import MeshStemPlot
 from co_utils import rand_mac
-import gc
-
+from kivy.clock import Clock
+from kivy.lang import Builder
+from kivy.metrics import dp
+from kivy.properties import ObjectProperty
+from kivy.storage.jsonstore import JsonStore
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.utils import platform
+from kivy_garden.graph import MeshStemPlot
+from kivymd.app import MDApp
+from kivymd.icon_definitions import md_icons
+from kivymd.uix.button import MDFlatButton, MDIconButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.list import IRightBodyTouch, TwoLineAvatarIconListItem
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.selectioncontrol import MDCheckbox
+from kivymd.uix.tab import MDTabsBase
 
 ACTION_ICON = "eye"
 
