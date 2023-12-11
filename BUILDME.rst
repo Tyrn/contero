@@ -71,3 +71,8 @@ Build the image:
     $ adb install -r bin/*.apk
 
 *NB*, 2022-11-26: The above works for ``debug`` only. ``release`` requires explicit signing.
+
+*NB* Be careful of the ``.buildozer`` directory. All the gigabytes precipitate there. If you delete
+its contents manually, always make sure to keep ``.gitignore`` with a single asterisk in it inside ``.buildozer``
+directory.
+The same applies to ``.gradle``. 
