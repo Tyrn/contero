@@ -2,7 +2,7 @@ import sys
 from functools import partial
 import kivy
 
-kivy.require("1.11.1")
+kivy.require("2.2.1")
 from kivy.utils import platform
 
 print(f"platform: {platform}")
