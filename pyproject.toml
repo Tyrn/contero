@@ -5,17 +5,17 @@ description = "Power supply manager"
 authors = ["Tyrn <orlov@bos-ltd.ru>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-Kivy = "^2.1.0"
+python = "^3.11"
+Kivy = "^2.2.1"
 kivymd = { git = "https://github.com/kivymd/KivyMD.git" }
 "kivy-garden.graph" = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.0"
-black = "^22.1.0"
-pre-commit = "^2.17.0"
+pytest = "^7.4.0"
+black = "^23.11.0"
+pre-commit = "^3.6.0"
 memory-profiler = "^0.60.0"
-matplotlib = "^3.5.1"
+matplotlib = "^3.7.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -23,7 +23,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py311']
 include = '\.pyi?$'
 exclude = '''
 
@@ -45,4 +45,3 @@ exclude = '''
   )/
 )
 '''
-
