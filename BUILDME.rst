@@ -10,8 +10,8 @@ Development
 - `KivyMD <https://github.com/kivymd/KivyMD>`__; MDDropdownMenu `1 <https://github.com/kivymd/KivyMD/issues/1203>`__, `2 <https://stackoverflow.com/questions/71510107/kivymd-update-mddropdownmenu-open-generates-an-error>`__
 - `Kivy Garden <https://github.com/kivy-garden>`__
 
-Use Git Hooks
--------------
+Use Git Hooks (optional)
+------------------------
 
 ::
 
@@ -28,6 +28,8 @@ Poetry (Desktop)
     $ poetry shell
     (.venv) $ python contero/main.py
 
+To leave Poetry Shell press Ctrl+D
+
 Check memory usage
 ^^^^^^^^^^^^^^^^^^
 
@@ -37,10 +39,31 @@ Check memory usage
     ...
     (.venv) $ mprof plot -o profile.png
 
-Buildozer (Mobile)
+Buildozer (Mobile, tested on Android)
 ------------------
 
 - `Build Docker Image <https://github.com/kivy/buildozer#buildozer-docker-image>`__
+
+::
+
+    $ cd ~
+    $ git clone https://github.com/kivy/buildozer.git
+    $ cd buildozer
+
+2023-12-11: Today it's essential to check Buildozer's Dockerfile and update openjdk, if necessary:
+
+::
+
+    -    openjdk-13-jdk \
+    +    openjdk-17-jdk \    
+
+Build the image:
+
+::
+
+    $ docker build --tag=buildozer .
+
+- Build the project
 
 ::
 
