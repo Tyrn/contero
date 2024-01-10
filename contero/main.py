@@ -5,6 +5,7 @@ import kivy
 
 kivy.require("2.2.1")
 import gc
+import sys
 import weakref
 from math import sin
 
@@ -203,7 +204,7 @@ class Contero(MDApp):
         self.about_dialog = MDDialog(
             title=T("co-app-name"),
             size_hint=(0.8, 0.3),
-            text=T("co-app-running-on") + f" {platform}",
+            text=T("co-app-running-on") + f" {platform}, {sys.byteorder}-endian",
             buttons=[
                 MDFlatButton(
                     text=T("co-close-button"),
