@@ -77,5 +77,5 @@ its contents manually, always make sure to keep ``.gitignore`` with a single ast
 directory.
 The same applies to ``.gradle``. 
 
-- `Direnv <https://direnv.net/>`__ (``.envrc`` file); requires *direnv* to be installed and `configured
-<https://github.com/direnv/direnv/wiki/Python>`__. Is optional.
+- `Direnv <https://direnv.net/>`__ (``.envrc`` file); requires *direnv* to be installed and
+  `configured <https://github.com/direnv/direnv/wiki/Python>`__. Is optional.
