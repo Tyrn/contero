@@ -76,3 +76,5 @@ Build the image:
 its contents manually, always make sure to keep ``.gitignore`` with a single asterisk in it inside ``.buildozer``
 directory.
 The same applies to ``.gradle``. 
+
+- `Direnv <https://direnv.net/>`__ (``.envrc`` file); requires *direnv* to be installed an configure. Is optional.
