@@ -1,8 +1,9 @@
 import sys
 from functools import partial
+
 import kivy
 
-kivy.require("2.2.1")
+kivy.require("2.3.1")
 from kivy.utils import platform
 
 print(f"platform: {platform}")
@@ -14,8 +15,9 @@ if len(sys.argv) > 1:
 else:
     from kivymd.app import MDApp as App
 
-from kivy.uix.button import Button
 import gc
+
+from kivy.uix.button import Button
 from memory_profiler import profile
 
 

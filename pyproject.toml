@@ -5,8 +5,8 @@ description = "Power supply manager"
 authors = ["Tyrn <orlov@bos-ltd.ru>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-Kivy = "2.2.1"
+python = "^3.13"
+Kivy = "2.3.1"
 # kivymd = { git = "https://github.com/kivymd/KivyMD.git" }
 kivymd = "1.1.1"
 "kivy-garden.graph" = "^0.4.0"
@@ -24,7 +24,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target-version = ['py311']
+target-version = ['py313']
 include = '\.pyi?$'
 exclude = '''
 

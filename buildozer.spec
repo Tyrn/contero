@@ -75,7 +75,7 @@ orientation = portrait
 # author = © Copyright Info
 
 # Kivy version to use
-osx.kivy_version = 2.2.1
+osx.kivy_version = 2.3.1
 
 #
 # Android specific

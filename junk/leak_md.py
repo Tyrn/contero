@@ -1,20 +1,20 @@
 from functools import partial
+
 import kivy
 
-kivy.require("2.2.1")
+kivy.require("2.3.1")
 from kivy.utils import platform
 
 print(f"platform: {platform}")
 
+import gc
+
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
-
 from kivymd.app import MDApp
-from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.list import TwoLineAvatarIconListItem
-import gc
+from kivymd.uix.tab import MDTabsBase
 from memory_profiler import profile
-
 
 # ACTION_ICON = "eye"
 

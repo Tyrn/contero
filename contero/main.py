@@ -1,9 +1,10 @@
 """
 Power supply manager for Linux and Android.
 """
+
 import kivy
 
-kivy.require("2.2.1")
+kivy.require("2.3.1")
 import gc
 import sys
 import weakref
