@@ -12,11 +12,11 @@ kivymd = "1.1.1"
 "kivy-garden.graph" = "^0.4.0"
 
 [poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-black = "^23.11.0"
-pre-commit = "^3.6.0"
-memory-profiler = "^0.60.0"
-matplotlib = "^3.7.4"
+pytest = "^8.4.2"
+black = "^25.1.0"
+pre-commit = "^4.3.0"
+memory-profiler = "^0.61.0"
+matplotlib = "^3.10.6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
