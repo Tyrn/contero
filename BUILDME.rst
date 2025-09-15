@@ -36,7 +36,7 @@ Instead of ``poetry shell`` one can employ the usual
 
     $ source .venv/bin/actcivate
     ...
-    $ deactivate
+    (.venv) $ deactivate
 
 Check memory usage
 ^^^^^^^^^^^^^^^^^^
@@ -71,7 +71,7 @@ Build the image:
 
     $ docker build --tag=buildozer .
 
-- Build the project
+Build the project:
 
 ::
 
@@ -82,8 +82,8 @@ Build the image:
 
 ::
 
-    $ buildozer android clean
-    $ buildozer android debug deploy run
+    (.venv) $ buildozer android clean
+    (.venv) $ buildozer android debug deploy run
 
 *NB*, 2022-11-26: The above works for ``debug`` only. ``release`` requires explicit signing.
 
