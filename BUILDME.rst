@@ -30,6 +30,14 @@ Poetry (Desktop)
 
 To leave Poetry Shell press Ctrl+D
 
+Instead of ``poetry shell`` one can employ the usual
+
+::
+
+    $ source .venv/bin/actcivate
+    ...
+    $ deactivate
+
 Check memory usage
 ^^^^^^^^^^^^^^^^^^
 
@@ -42,7 +50,7 @@ Check memory usage
 Buildozer (Mobile, tested on Android)
 ------------------
 
-- `Build Docker Image <https://github.com/kivy/buildozer#buildozer-docker-image>`__
+- `Build Docker Image <https://github.com/kivy/buildozer#buildozer-docker-image>`__ (obsolete, not recommended)
 
 ::
 
@@ -69,6 +77,13 @@ Build the image:
 
     $ docker-compose run buildozer android [debug | release]
     $ adb install -r bin/*.apk
+
+- `Use <https://github.com/kivy/buildozer#usage>`__ ``buildozer`` from dev dependencies, like this
+
+::
+
+    $ buildozer android clean
+    $ buildozer android debug deploy run
 
 *NB*, 2022-11-26: The above works for ``debug`` only. ``release`` requires explicit signing.
 
