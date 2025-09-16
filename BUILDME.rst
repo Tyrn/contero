@@ -19,6 +19,28 @@ Use Git Hooks (optional)
     ...
     (.venv) $ pre-commit run --all-files
 
+Pyenv (Desktop)
+---------------
+
+- Install Python 3.11 user-wide (to ``~/.pyenv``),
+  if it isn't already there
+
+::
+
+    $ pyenv install 3.11.11
+
+- Check
+
+::
+
+    $ pyenv versions
+
+- In a new Poetry project, just
+
+::
+
+    $ poetry env use 3.11.11
+
 Poetry (Desktop)
 ----------------
 
